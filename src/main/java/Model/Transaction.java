@@ -1,13 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Model;
 
 /**
  *
  * @author mac
  */
+
+//A transaction is generated whenever food is sold and a receipt is printed
 public class Transaction {
     private int id;
     private int food_id;
