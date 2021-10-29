@@ -11,8 +11,6 @@ import Model.User;
  * @author Antoni
  */
 public class UserController {
-    private static final String USER_IS_ADMIN = "user is admin";
-    private static final String USER_IS_CASHIER = "user is cashier";
     private String loginType = null;
     private User user = null;
     
