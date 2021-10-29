@@ -4,10 +4,19 @@
  */
 package DAO;
 
+import Model.User;
+import java.util.List;
+
 /**
  *
  * @author mac
  */
 public interface UserDAO {
+       List<User> get();
+
+    boolean  saveUser(User user);
     
+    User get(int id);
+   
+     
 }

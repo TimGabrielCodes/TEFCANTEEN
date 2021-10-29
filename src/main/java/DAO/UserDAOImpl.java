@@ -1,13 +1,123 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package DAO;
 
+
+import Model.User;
+import Util.DBConnectionUtil;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
- * @author mac
+ * @author Zinwota Timothy @BrainStack
  */
 public class UserDAOImpl implements UserDAO {
-    
+
+    Connection connection = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
+    List<User> list = null;
+    User user = null;
+    PreparedStatement preparedStmt = null;
+
+    @Override
+    public List<User> get() {
+
+        try {
+            list = new ArrayList<User>();
+            String sql = "select * from user ";
+            connection = DBConnectionUtil.openConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                user = new User();
+              //  user.setRole(resultSet.getString("role"));
+                user.setId(resultSet.getInt("id"));
+                user.setFirst_name(resultSet.getString("first_name"));
+                user.setSurn_name(resultSet.getString("surn_name"));
+                user.setPhone_number(resultSet.getString("phone_number"));
+                user.setPassword(resultSet.getString("password"));
+                user.setUser_name(resultSet.getString("user_name"));
+             
+                list.add(user);
+            }
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+
+        }
+
+        return list;
+
+    }
+
+  
+
+    @Override
+    public boolean saveUser(User user) {
+        boolean flag = false;
+        try {
+
+      
+            String sql = "insert into user(first_name, surn_name, phonenumber, username, password) "
+                    + "values('" + user.getFirst_name() + "','" + user.getSurn_name() + "','" + user.getPhone_number() + "','" + user.getUser_name() + "','" + user.getPassword() + "')";
+            try {
+                connection = DBConnectionUtil.openConnection();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            preparedStmt = connection.prepareStatement(sql);
+            preparedStmt.executeUpdate();
+            flag = true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+
+    @Override
+    public User get(int id) {
+        User user = null;
+        try {
+            user = new User();
+            String sql = "SELECT * FROM user  WHERE user_id=" + id;
+            connection = DBConnectionUtil.openConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+               user.setId(resultSet.getInt("id"));
+                user.setFirst_name(resultSet.getString("first_name"));
+                user.setSurn_name(resultSet.getString("surn_name"));
+                user.setPhone_number(resultSet.getString("phone_number"));
+                user.setPassword(resultSet.getString("password"));
+                user.setUser_name(resultSet.getString("user_name"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //System.out.println(user.toString());
+        return user;
+    }
+
+
+
+
+  
 }
