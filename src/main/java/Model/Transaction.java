@@ -15,6 +15,10 @@ public class Transaction {
     private String timestamp;
     private String status;
     private int group_id;
+    
+    public Transaction(){
+        
+    }
 
     public Transaction(int id, int food_id, int user_id, Double total_price, String timestamp, String status, int group_id) {
         this.id = id;

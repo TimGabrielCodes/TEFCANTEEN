@@ -15,6 +15,10 @@ public class Food {
     private String unit;
     private Double price;
     private boolean available;
+    
+    public Food(){
+        
+    }
 
     public Food(int id, String food_name, String unit, Double price, boolean available) {
         this.id = id;
