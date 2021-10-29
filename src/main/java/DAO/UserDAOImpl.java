@@ -105,6 +105,7 @@ public class UserDAOImpl implements UserDAO {
                 user.setPhone_number(resultSet.getString("phone_number"));
                 user.setPassword(resultSet.getString("password"));
                 user.setUser_name(resultSet.getString("user_name"));
+                 user.setAdmin(resultSet.getBoolean("isAdmin"));
             }
 
         } catch (SQLException e) {
@@ -133,6 +134,7 @@ public class UserDAOImpl implements UserDAO {
                 user.setPhone_number(resultSet.getString("phone_number"));
                 user.setPassword(resultSet.getString("password"));
                 user.setUser_name(resultSet.getString("user_name"));
+                user.setAdmin(resultSet.getBoolean("isAdmin"));
             }
 
         } catch (SQLException e) {

@@ -9,6 +9,9 @@ import DAO.UserDAO;
 import DAO.UserDAOImpl;
 import Model.LoginBean;
 import Model.User;
+import View.Clerk.POS;
+import java.awt.event.WindowEvent;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -106,21 +109,24 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void login_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_buttonActionPerformed
-        // TODO add your handling code here:
-//        System.out.println("Login button clicked");
+
         String userName = this.username_field.getText();
         String passWord = this.password_field.getText();
         User loggedIn = new User();
-        
-        
-//        System.out.println(userName);
-//        System.out.println(passWord);
         
         LoginBean login = new LoginBean(userName, passWord);
         if(userController.logUserIn(login)){
             System.out.println(userDAO.get(login.getUsername()).getFirst_name() +  " is logged in");
             loggedIn = userDAO.get(login.getUsername());
-            
+            this.setVisible(false);
+            if(loggedIn.isAdmin()){
+            //Open Admin Dashboard here
+            }
+            else{
+            new POS().setVisible(true);
+            }
+        } else{
+            JOptionPane.showMessageDialog(rootPane, "Incorrect Credentials! Try Again");
         }
         
         
