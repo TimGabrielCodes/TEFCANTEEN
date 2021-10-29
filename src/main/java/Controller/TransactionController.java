@@ -4,35 +4,28 @@
  */
 package Controller;
 
-import Model.Food;
+import Model.Transaction;
 import java.util.List;
 
 /**
  *
- * @author mac
+ * @author FUJITSU
  */
-public class FoodController {
-    public void uploadFoodCsv(String csv){
-        
-    }
-    
-    public List<Food> getFood(){
+public class TransactionController {
+    public List<Transaction> getAllTransactions(String userId){
         
         return null;
     }
     
-    public Food getFood(int id){
+    public Transaction getTransaction(Transaction transaction){
         
         return null;
     }
     
-    public void deleteFood(int id){
+    public Boolean printInvoice(Transaction transaction){
         
-        
+        return null;
     }
     
-    public void updateFood(int id, Food newUpdate){
-        
-        
-    }
+    
 }
