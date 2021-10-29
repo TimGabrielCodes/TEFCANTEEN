@@ -6,6 +6,7 @@
 package DAO;
 
 
+import Model.LoginBean;
 import Model.User;
 import Util.DBConnectionUtil;
 import java.sql.Connection;
@@ -115,9 +116,69 @@ public class UserDAOImpl implements UserDAO {
         //System.out.println(user.toString());
         return user;
     }
+        @Override
+    public User get(String user_name) {
+        User user = null;
+        try {
+            user = new User();
+            String sql = "SELECT * FROM user  WHERE user_name='" + user_name+"'";
+            connection = DBConnectionUtil.openConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+               user.setId(resultSet.getInt("id"));
+                user.setFirst_name(resultSet.getString("first_name"));
+                user.setSurn_name(resultSet.getString("surn_name"));
+                user.setPhone_number(resultSet.getString("phone_number"));
+                user.setPassword(resultSet.getString("password"));
+                user.setUser_name(resultSet.getString("user_name"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //System.out.println(user.toString());
+        return user;
+    }
+
+    @Override
+    public boolean login(LoginBean loginBean) {
+        boolean isMatch = false;
+        try {
+           
+            
+            LoginBean loginMatch = new LoginBean();
+            
+            String sql = "select * from user where user_name=? and password =?";
+            
+            
+            Connection connection = DBConnectionUtil.openConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, loginBean.getUsername());
+            stmt.setString(2, loginBean.getPassword());
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()){
+                return true;
+            } else{
+                return false;
+                
+                
+                
+            }   } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return isMatch;
 
 
 
 
   
-}
+}}

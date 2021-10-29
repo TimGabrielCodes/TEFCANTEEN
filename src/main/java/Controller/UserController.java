@@ -4,6 +4,9 @@
  */
 package Controller;
 
+import DAO.UserDAO;
+import DAO.UserDAOImpl;
+import Model.LoginBean;
 import Model.User;
 
 /**
@@ -13,8 +16,12 @@ import Model.User;
 public class UserController {
     private String loginType = null;
     private User user = null;
+    UserDAO userDAO = new UserDAOImpl();
     
-    public void logUserIn(String name, String password){
+    public boolean logUserIn(LoginBean loginBean){
+        
+      
+        return userDAO.login(loginBean) == true;
         
     }
     

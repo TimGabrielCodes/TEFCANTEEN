@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import Model.LoginBean;
 import Model.User;
 import java.util.List;
 
@@ -17,6 +18,9 @@ public interface UserDAO {
     boolean  saveUser(User user);
     
     User get(int id);
+    
+    User get(String user_name);
    
+    boolean login(LoginBean loginBean);
      
 }
