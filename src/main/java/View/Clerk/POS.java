@@ -4,6 +4,14 @@
  */
 package View.Clerk;
 
+import Controller.FoodController;
+import Model.Food;
+import Util.ButtonColumn;
+import java.awt.event.ActionEvent;
+import java.util.List;
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.table.AbstractTableModel;
 /**
  *
  * @author mac
@@ -13,8 +21,63 @@ public class POS extends javax.swing.JFrame {
     /**
      * Creates new form POS
      */
+    
+    private FoodController foodController =  new FoodController();
+    private List<Food> foods = foodController.getFood();
+    Object[][] data = new Object[foods.size()][5];
+    String[] header = new String [] {"S/N", "Food Name", "Unit", "Price", "Action"};
     public POS() {
         initComponents();
+       
+
+//	jTable1.setModel();
+        jTable1.setModel(new AbstractTableModel(){
+            @Override
+            public int getRowCount() {
+                return foods.size();
+            }
+
+            @Override
+            public int getColumnCount() {
+                return 5;
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                //Creating Button
+                JButton jButton = new JButton("Add to Cart");
+                jButton.setSize(40, 25);
+                
+                Food foodInstance = foods.get(rowIndex);
+                switch(columnIndex){
+                    case 0:
+                        return foodInstance.getId();
+                    case 1:
+                        return foodInstance.getFood_name();
+                    case 2:
+                        return foodInstance.getPrice();
+                    case 3:
+                        return foodInstance.getUnit();
+                    case 4:
+                        return "Order";
+                }
+                
+                return null;
+            }
+        });
+        
+        for(int i=0; i<header.length; i++){
+            jTable1.getColumnModel().getColumn(i).setHeaderValue(header[i]);//Set Header
+            jTable1.setRowHeight(i, 30);
+        }
+        
+        ButtonColumn buttonColumn = new ButtonColumn(jTable1,new AbstractAction(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Add To Cart
+            }
+        },4);
+        jScrollPane1.setViewportView(jTable1);
     }
 
     /**
@@ -39,23 +102,12 @@ public class POS extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "S/N", "Food Name", "Unit", "Price", "Action"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-        });
+        ));
         jScrollPane1.setViewportView(jTable1);
 
         jTextArea1.setColumns(20);
@@ -93,7 +145,7 @@ public class POS extends javax.swing.JFrame {
                     .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

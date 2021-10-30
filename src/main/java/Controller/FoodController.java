@@ -4,6 +4,8 @@
  */
 package Controller;
 
+import DAO.FoodDAO;
+import DAO.FoodDAOImpl;
 import Model.Food;
 import java.util.List;
 
@@ -12,14 +14,19 @@ import java.util.List;
  * @author mac
  */
 public class FoodController {
+    FoodDAO foodDao = new FoodDAOImpl();
+    
+    public List<Food> getFood(){
+        if(foodDao.get() != null){
+            return foodDao.get();
+        }
+        return null;
+    }
+    
     public void uploadFoodCsv(String csv){
         
     }
     
-    public List<Food> getFood(){
-        
-        return null;
-    }
     
     public Food getFood(int id){
         
