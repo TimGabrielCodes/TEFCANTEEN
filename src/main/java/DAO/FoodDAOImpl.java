@@ -263,6 +263,29 @@ public class FoodDAOImpl implements FoodDAO {
   
     }
 
+    @Override
+    public boolean save(Food food) {
+      boolean flag = false;
+        try {
+
+      
+            String sql = "insert into food(food_name, unit, price) "
+                    + "values('" + food.getFood_name()+ "','" + food.getUnit() + "'," +  food.getPrice() +  ")";
+            try {
+                connection = DBConnectionUtil.openConnection();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            preparedStmt = connection.prepareStatement(sql);
+            preparedStmt.executeUpdate();
+            flag = true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+
 
 
 
