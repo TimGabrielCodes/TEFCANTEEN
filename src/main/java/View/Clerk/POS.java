@@ -8,11 +8,13 @@ import Controller.FoodController;
 import Model.Food;
 import Util.ButtonColumn;
 import Util.Cart;
+import Util.PrintReceipt;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 /**
  *
@@ -26,15 +28,14 @@ public class POS extends javax.swing.JFrame {
     
     private FoodController foodController =  new FoodController();
     private ArrayList<Food> foods = (ArrayList<Food>) foodController.getFood();
-    Object[][] data = new Object[foods.size()][5];
     String[] header = new String [] {"S/N", "Food Name", "Unit", "Price", "Action",""};
     Cart cart = new Cart();
     
     public POS() {
         initComponents();
-       
-
-//	jTable1.setModel();
+        
+        jTextArea1.setEditable(false);
+                
         jTable1.setModel(new AbstractTableModel(){
             @Override
             public int getRowCount() {
@@ -117,7 +118,7 @@ public class POS extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        printReceiptBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -137,10 +138,10 @@ public class POS extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
 
-        jButton1.setText("Print Receipt");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        printReceiptBtn.setText("Print Receipt");
+        printReceiptBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                printReceiptBtnActionPerformed(evt);
             }
         });
 
@@ -156,7 +157,7 @@ public class POS extends javax.swing.JFrame {
                 .addGap(64, 64, 64))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(printReceiptBtn)
                 .addGap(115, 115, 115))
         );
         jPanel1Layout.setVerticalGroup(
@@ -167,7 +168,7 @@ public class POS extends javax.swing.JFrame {
                     .addComponent(jScrollPane2)
                     .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(printReceiptBtn)
                 .addContainerGap(59, Short.MAX_VALUE))
         );
 
@@ -185,9 +186,14 @@ public class POS extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void printReceiptBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printReceiptBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        if(jTextArea1.getText().isEmpty()){
+            JOptionPane.showMessageDialog(rootPane, "The Receipt Panel is empty");
+        }else{
+            PrintReceipt.printTextarea(jTextArea1);
+        }
+    }//GEN-LAST:event_printReceiptBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -225,11 +231,11 @@ public class POS extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JButton printReceiptBtn;
     // End of variables declaration//GEN-END:variables
 }

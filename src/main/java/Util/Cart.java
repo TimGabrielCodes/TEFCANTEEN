@@ -17,37 +17,50 @@ import java.util.Map;
  */
 public class Cart {
     private HashMap<String,Double> cartMap = new HashMap<>();
+    private HashMap<String, Integer> quantityCounter = new HashMap<>();
+    private HashMap<String, String> unitCounter = new HashMap<>();
     
     public void addToCart(Food food){
-        if(cartMap.get(food.getFood_name()) == null){
-            cartMap.put(food.getFood_name(), food.getPrice());
+        String foodName = food.getFood_name();
+        if(cartMap.get(foodName) == null){
+            cartMap.put(foodName, food.getPrice());
+            quantityCounter.put(foodName, 1);
+            unitCounter.put(foodName, food.getUnit());
         }else{
-            Double newPrice = cartMap.get(food.getFood_name()) + food.getPrice();
-            cartMap.put(food.getFood_name(), newPrice);
+            Double newPrice = cartMap.get(foodName) + food.getPrice();
+            cartMap.put(foodName, newPrice);
+            quantityCounter.put(foodName, 
+                    quantityCounter.get(foodName) + 1);
         }
     }
     
     public void removeFromCart(Food food){
-        Double foodPrice = cartMap.get(food.getFood_name());
+        String foodName = food.getFood_name();
+        Double foodPrice = cartMap.get(foodName);
         if(foodPrice != null){
             if(foodPrice > food.getPrice()){
-                cartMap.put(food.getFood_name(), foodPrice - food.getPrice());
+                cartMap.put(foodName, foodPrice - food.getPrice());
+                quantityCounter.put(foodName, quantityCounter.get(foodName) - 1);
             }else{
-                cartMap.remove(food.getFood_name());
+                cartMap.remove(foodName);
+                quantityCounter.remove(foodName);
+                unitCounter.remove(foodName);
             }
         }
     }
     
     public String printCart(){
-        int total = 0;
-        StringBuffer str = new StringBuffer("ITEM \t PRICE\n\n");
+        Double total = 0.0;
+        StringBuffer str = new StringBuffer("ITEM \t QUANTITY \t PRICE\n(NGN)\n\n");
         
         for(Map.Entry<String, Double> entry : cartMap.entrySet()){
-            str.append(entry.getKey()+" \t "+entry.getValue()+"\n");
+            final Double price = entry.getValue();
+            str.append(entry.getKey()+" \t "+quantityCounter.get(entry.getKey())+" "+
+                    unitCounter.get(entry.getKey())+"\t"+entry.getValue()+"\n");
             total += entry.getValue();
         }
         
-        str.append("\n\nTOTAL \t "+total);
+        str.append("\n\nTOTAL \t\t "+total);
         return str.toString();
     }
 }
