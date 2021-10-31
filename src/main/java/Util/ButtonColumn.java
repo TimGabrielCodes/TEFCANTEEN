@@ -4,12 +4,15 @@
  */
 package Util;
 
+import Model.Food;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.AbstractCellEditor;
 import javax.swing.Action;
 import javax.swing.Icon;
@@ -39,6 +42,8 @@ public class ButtonColumn extends AbstractCellEditor
     private JButton editButton;
     private Object editorValue;
     private boolean isButtonColumnEditor;
+    
+    private ArrayList<Food> listOfFood = new ArrayList<>();
 
     /**
      *  Create the ButtonColumn to be used as a renderer and editor. The
@@ -48,8 +53,9 @@ public class ButtonColumn extends AbstractCellEditor
      *  @param table the table containing the button renderer/editor
      *  @param action the Action to be invoked when the button is invoked
      *  @param column the column to which the button renderer/editor is added
+     *  @param food the list of food which will help in setting each action command
      */
-    public ButtonColumn(JTable table, Action action, int column)
+    public ButtonColumn(JTable table, Action action, int column, ArrayList<Food> foods)
     {
         this.table = table;
         this.action = action;
@@ -60,6 +66,8 @@ public class ButtonColumn extends AbstractCellEditor
         editButton.addActionListener( this );
         originalBorder = editButton.getBorder();
         setFocusBorder( new LineBorder(Color.BLUE) );
+        
+        listOfFood = foods;
 
         TableColumnModel columnModel = table.getColumnModel();
         columnModel.getColumn(column).setCellRenderer( this );
@@ -125,7 +133,8 @@ public class ButtonColumn extends AbstractCellEditor
             editButton.setText( value.toString() );
             editButton.setIcon( null );
         }
-
+        
+        editButton.setActionCommand(listOfFood.get(row).getId()+"");
         this.editorValue = value;
         return editButton;
     }
@@ -179,6 +188,8 @@ public class ButtonColumn extends AbstractCellEditor
             renderButton.setIcon( null );
         }
 
+        
+        renderButton.setActionCommand(listOfFood.get(row).getId()+"");
         return renderButton;
     }
 

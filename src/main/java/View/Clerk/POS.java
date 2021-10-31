@@ -7,7 +7,9 @@ package View.Clerk;
 import Controller.FoodController;
 import Model.Food;
 import Util.ButtonColumn;
+import Util.Cart;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -23,9 +25,11 @@ public class POS extends javax.swing.JFrame {
      */
     
     private FoodController foodController =  new FoodController();
-    private List<Food> foods = foodController.getFood();
+    private ArrayList<Food> foods = (ArrayList<Food>) foodController.getFood();
     Object[][] data = new Object[foods.size()][5];
-    String[] header = new String [] {"S/N", "Food Name", "Unit", "Price", "Action"};
+    String[] header = new String [] {"S/N", "Food Name", "Unit", "Price", "Action",""};
+    Cart cart = new Cart();
+    
     public POS() {
         initComponents();
        
@@ -39,7 +43,7 @@ public class POS extends javax.swing.JFrame {
 
             @Override
             public int getColumnCount() {
-                return 5;
+                return 6;
             }
 
             @Override
@@ -60,10 +64,18 @@ public class POS extends javax.swing.JFrame {
                         return foodInstance.getUnit();
                     case 4:
                         return "Order";
+                    case 5:
+                        return "Remove";
                 }
                 
                 return null;
             }
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return true;
+            }
+            
         });
         
         for(int i=0; i<header.length; i++){
@@ -71,12 +83,23 @@ public class POS extends javax.swing.JFrame {
             jTable1.setRowHeight(i, 30);
         }
         
-        ButtonColumn buttonColumn = new ButtonColumn(jTable1,new AbstractAction(){
+        ButtonColumn removeFromCartBtn = new ButtonColumn(jTable1, new AbstractAction(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cart.removeFromCart(foods.get(Integer.parseInt(e.getActionCommand())));
+                jTextArea1.setText(cart.printCart());
+            }
+        },5,foods);
+        
+        ButtonColumn addToCartBtn = new ButtonColumn(jTable1,new AbstractAction(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Add To Cart
+                cart.addToCart(foods.get(Integer.parseInt(e.getActionCommand())));
+                jTextArea1.setText(cart.printCart());
             }
-        },4);
+        },4,foods);
+        
         jScrollPane1.setViewportView(jTable1);
     }
 
