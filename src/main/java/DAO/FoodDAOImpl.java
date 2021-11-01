@@ -57,9 +57,6 @@ public class FoodDAOImpl implements FoodDAO {
                 food.setPrice(resultSet.getDouble("price"));
                 food.setAvailable(resultSet.getBoolean("available"));
            
-
- 
-
                 list.add(food);
             }
 
