@@ -22,7 +22,9 @@ public class FoodController {
         }
         return null;
     }
-    
+    public boolean saveFood(Food food){
+        return foodDao.saveFood(food);
+    }
     public void uploadFoodCsv(String csv){
         
     }

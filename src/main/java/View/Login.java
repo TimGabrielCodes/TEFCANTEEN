@@ -9,6 +9,7 @@ import DAO.UserDAO;
 import DAO.UserDAOImpl;
 import Model.LoginBean;
 import Model.User;
+import View.Admin.Dashboard;
 import View.Clerk.POS;
 import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
@@ -153,7 +154,7 @@ public class Login extends javax.swing.JFrame {
             loggedIn = userDAO.get(login.getUsername());
             this.setVisible(false);
             if(loggedIn.isAdmin()){
-            //Open Admin Dashboard here
+            new Dashboard().setVisible(true);
             }
             else{
             new POS().setVisible(true);

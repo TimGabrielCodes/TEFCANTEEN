@@ -51,7 +51,7 @@ public class Cart {
     
     public String printCart(){
         Double total = 0.0;
-        StringBuffer str = new StringBuffer("ITEM \t QUANTITY \t PRICE\n(NGN)\n\n");
+        StringBuffer str = new StringBuffer("TEF CANTEEN \n ITEM \t QUANTITY \t PRICE\n(NGN)\n\n");
         
         for(Map.Entry<String, Double> entry : cartMap.entrySet()){
             final Double price = entry.getValue();
