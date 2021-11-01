@@ -3,9 +3,11 @@ DAO/FoodDAOImpl.class
 View/Clerk/POS.class
 DAO/UserDAO.class
 View/Login$3.class
+View/Admin/AddFood.class
 View/Clerk/POS$5.class
 View/Clerk/POS$3.class
 Controller/UserController.class
+View/Admin/AddFood$1.class
 Model/User.class
 View/Login$1.class
 utils/DBConnectionUtil.class
