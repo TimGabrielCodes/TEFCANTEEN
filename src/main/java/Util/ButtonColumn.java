@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Util;
+
 import Model.Food;
 import java.awt.Color;
 import java.awt.Component;
@@ -11,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.AbstractCellEditor;
 import javax.swing.Action;
 import javax.swing.Icon;
@@ -22,6 +24,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
+
 /**
  *
  * @author FUJITSU
@@ -34,6 +37,7 @@ public class ButtonColumn extends AbstractCellEditor
     private int mnemonic;
     private Border originalBorder;
     private Border focusBorder;
+
     private JButton renderButton;
     private JButton editButton;
     private Object editorValue;
@@ -55,12 +59,14 @@ public class ButtonColumn extends AbstractCellEditor
     {
         this.table = table;
         this.action = action;
+
         renderButton = new JButton();
         editButton = new JButton();
         editButton.setFocusPainted( false );
         editButton.addActionListener( this );
         originalBorder = editButton.getBorder();
         setFocusBorder( new LineBorder(Color.BLUE) );
+        
         listOfFood = foods;
 
         TableColumnModel columnModel = table.getColumnModel();

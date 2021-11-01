@@ -14,24 +14,17 @@ import java.util.List;
  * @author mac
  */
 public class FoodController {
-    FoodDAO foodDAO = new FoodDAOImpl();
+    FoodDAO foodDao = new FoodDAOImpl();
     
     public List<Food> getFood(){
-        if(foodDAO.get() != null){
-            return foodDAO.get();
+        if(foodDao.get() != null){
+            return foodDao.get();
         }
         return null;
     }
     
     public void uploadFoodCsv(String csv){
         
-    }
-    
-    public boolean saveFood(Food food){
-        if(foodDAO.save(food)){
-            return true;
-        }
-        else return false;
     }
     
     

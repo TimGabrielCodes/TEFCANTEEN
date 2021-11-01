@@ -14,7 +14,11 @@ import java.util.List;
  */
 public interface FoodDAO {
             List<Food> get();
+//        List<Food> getRestock();
         List<Transaction> getTrans();
+//        List<Transaction> getUserTransactions(String name);
+//        List<Transaction> countTrans();
+//        List<Transaction> trackSales();
     boolean  saveFood(Food product);
    
     
@@ -27,8 +31,6 @@ public interface FoodDAO {
  
     
     boolean delete(int id);
-    
-    boolean save(Food food);
     
 
 
