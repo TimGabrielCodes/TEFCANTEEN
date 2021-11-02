@@ -45,9 +45,9 @@ public class UserController {
         
     }
     
-    public void insertUser(User user){
-        
-    }
+ public boolean saveUser(User user){
+     return userDAO.saveUser(user);
+ }
     
     public User getUser(int id){
         

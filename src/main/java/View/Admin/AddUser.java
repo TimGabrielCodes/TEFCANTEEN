@@ -5,7 +5,9 @@
 package View.Admin;
 
 import Controller.FoodController;
+import Controller.UserController;
 import Model.Food;
+import Model.User;
 
 /**
  *
@@ -35,21 +37,22 @@ public class AddUser extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        foodName = new javax.swing.JTextField();
-        foodPrice = new javax.swing.JTextField();
-        foodUnit = new javax.swing.JComboBox<>();
+        userNameField = new javax.swing.JTextField();
+        surnNameField = new javax.swing.JTextField();
+        roleField = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         saveUserBtn = new javax.swing.JButton();
         message = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        foodPrice1 = new javax.swing.JTextField();
-        foodPrice2 = new javax.swing.JTextField();
+        firstNameField = new javax.swing.JTextField();
+        phoneNumberField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        passwordField = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Add User");
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(254, 165, 0));
 
@@ -65,10 +68,10 @@ public class AddUser extends javax.swing.JFrame {
 
         jLabel5.setText("Surn Name");
 
-        foodUnit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Clerk", "Admin" }));
-        foodUnit.addActionListener(new java.awt.event.ActionListener() {
+        roleField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Clerk", "Admin" }));
+        roleField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                foodUnitActionPerformed(evt);
+                roleFieldActionPerformed(evt);
             }
         });
 
@@ -107,46 +110,44 @@ public class AddUser extends javax.swing.JFrame {
                 .addGap(234, 234, 234)
                 .addComponent(jButton1))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 270, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(message, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(226, 226, 226))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(157, 157, 157)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(301, 301, 301)
+                        .addGap(431, 431, 431)
                         .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 36, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel5))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(surnNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(phoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(userNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel6))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(foodPrice1, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
-                        .addComponent(jPasswordField1))
-                    .addComponent(foodUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(firstNameField, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                        .addComponent(passwordField))
+                    .addComponent(roleField, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(47, 47, 47))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel5))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(foodPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(foodPrice2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(foodName, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                     .addContainerGap(454, Short.MAX_VALUE)
@@ -165,27 +166,27 @@ public class AddUser extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(foodUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(roleField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(foodPrice1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(foodPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(surnNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(foodPrice2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(phoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(foodName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(userNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(40, 40, 40)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -193,7 +194,7 @@ public class AddUser extends javax.swing.JFrame {
                 .addGap(8, 8, 8))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(233, Short.MAX_VALUE)
+                    .addContainerGap(242, Short.MAX_VALUE)
                     .addComponent(saveUserBtn)
                     .addGap(61, 61, 61)))
         );
@@ -212,39 +213,52 @@ public class AddUser extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void foodUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_foodUnitActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_foodUnitActionPerformed
+    private void saveUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveUserBtnActionPerformed
+        UserController userController = new UserController();
+        User user = new User();
+        String  firstName = firstNameField.getText();
+        String surnName = surnNameField.getText();
+        String userName =  userNameField.getText();
+        String password = passwordField.getText();
+        String phoneNumber = phoneNumberField.getText();
+        boolean isAdmin = false;
+        if(roleField.getSelectedItem().toString().equals("Admin")){
+            isAdmin = true;
+        }
+        user.setAdmin(isAdmin);
+        user.setFirst_name(firstName);
+        user.setPassword(password);
+        user.setPhone_number(phoneNumber);
+        user.setSurn_name(surnName);
+        user.setUser_name(userName);
+
+        if(firstName.isBlank() || surnName.isBlank()|| userName.isBlank() || password.isBlank() || phoneNumber.isBlank()){
+            message.setText("Invalid Entries");
+        }else{
+            if(userController.saveUser(user)){
+                message.setText("Succes!!!!");
+                userNameField.setText("");
+                roleField.setSelectedIndex(0);
+                surnNameField.setText("");
+                firstNameField.setText("");
+                passwordField.setText("");
+                roleField.setSelectedIndex(0);
+
+            }else{
+                message.setText("Please fill details correctly");
+            }
+        }
+
+    }//GEN-LAST:event_saveUserBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
         new Dashboard().setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void saveUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveUserBtnActionPerformed
-        String name = foodName.getText();
-        Double price = Double.parseDouble(foodPrice.getText());
-        String unit = foodUnit.getSelectedItem().toString();
-        FoodController foodController = new FoodController();
-        Food food = new Food();
-        food.setFood_name(name);
-        food.setPrice(price);
-        food.setUnit(unit);
-
-        if(name.isBlank() || price.isNaN() || unit.isBlank()){
-            message.setText("Invalid Entries");
-        }else{
-        if(foodController.saveFood(food)){
-            message.setText(food.getFood_name()+" added successfully");
-            foodName.setText("");
-            foodUnit.setSelectedIndex(0);
-            foodPrice.setText("");
-        }else{
-            message.setText("Please fill details correctly");
-        }
-        }
-                // TODO add your handling code here:
-    }//GEN-LAST:event_saveUserBtnActionPerformed
+    private void roleFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roleFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_roleFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -283,11 +297,7 @@ public class AddUser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField foodName;
-    private javax.swing.JTextField foodPrice;
-    private javax.swing.JTextField foodPrice1;
-    private javax.swing.JTextField foodPrice2;
-    private javax.swing.JComboBox<String> foodUnit;
+    private javax.swing.JTextField firstNameField;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -298,8 +308,12 @@ public class AddUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JLabel message;
+    private javax.swing.JPasswordField passwordField;
+    private javax.swing.JTextField phoneNumberField;
+    private javax.swing.JComboBox<String> roleField;
     private javax.swing.JButton saveUserBtn;
+    private javax.swing.JTextField surnNameField;
+    private javax.swing.JTextField userNameField;
     // End of variables declaration//GEN-END:variables
 }

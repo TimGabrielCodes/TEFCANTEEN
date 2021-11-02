@@ -71,8 +71,9 @@ public class UserDAOImpl implements UserDAO {
         try {
 
       
-            String sql = "insert into user(first_name, surn_name, phonenumber, username, password) "
-                    + "values('" + user.getFirst_name() + "','" + user.getSurn_name() + "','" + user.getPhone_number() + "','" + user.getUser_name() + "','" + user.getPassword() + "')";
+            String sql = "insert into user(first_name, surn_name, phone_number, user_name, password, isAdmin) "
+                    + "values('" + user.getFirst_name() + "','" + user.getSurn_name() + "','" + user.getPhone_number() + "','" + user.getUser_name() + "','" + user.getPassword() 
+                    + "'," + user.isAdmin() +")";
             try {
                 connection = DBConnectionUtil.openConnection();
             } catch (ClassNotFoundException ex) {

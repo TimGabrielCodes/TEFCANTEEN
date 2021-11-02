@@ -4,6 +4,17 @@
  */
 package View.Admin;
 
+import Controller.FoodController;
+import Model.Food;
+import Util.ButtonColumn;
+import Util.Cart;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Comparator;
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.table.AbstractTableModel;
+
 /**
  *
  * @author mac
@@ -13,8 +24,82 @@ public class ListOfFoods extends javax.swing.JFrame {
     /**
      * Creates new form ListOfFoods
      */
+    
+     private FoodController foodController =  new FoodController();
+    private ArrayList<Food> foods = (ArrayList<Food>) foodController.getFood();
+   
+    String[] header = new String [] {"S/N", "Food Name", "Price", "Unit",  "Action",""};
+    
     public ListOfFoods() {
         initComponents();
+        
+      
+       
+                
+        foodTable.setModel(new AbstractTableModel(){
+            @Override
+            public int getRowCount() {
+                return foods.size();
+            }
+
+            @Override
+            public int getColumnCount() {
+                return 6;
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                //Creating Button
+                JButton jButton = new JButton("Update Food");
+                jButton.setSize(40, 25);
+                
+                Food foodInstance = foods.get(rowIndex);
+                switch(columnIndex){
+                    case 0:
+                        return foodInstance.getId();
+                    case 1:
+                        return foodInstance.getFood_name();
+                    case 2:
+                        return foodInstance.getPrice();
+                    case 3:
+                        return foodInstance.getUnit();
+                    case 4:
+                        return "Update";
+                    case 5:
+                        return "Delete";
+                }
+                
+                return null;
+            }
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return true;
+            }
+            
+        });
+        
+        for(int i=0; i<header.length; i++){
+            foodTable.getColumnModel().getColumn(i).setHeaderValue(header[i]);//Set Header
+            foodTable.setRowHeight(i, 30);
+        }
+        
+        ButtonColumn deleteFoodBtn = new ButtonColumn(foodTable, new AbstractAction(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               //Delete food from DB by food ID
+              
+            }
+        },5,foods);
+        
+        ButtonColumn updateFoodBtn = new ButtonColumn(foodTable,new AbstractAction(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Open Form to update food by ID    
+            }
+        },4,foods);
+        
+        jScrollPane1.setViewportView(foodTable);
     }
 
     /**
