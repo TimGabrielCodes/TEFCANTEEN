@@ -128,6 +128,7 @@ public class Transactions extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void printReceiptBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printReceiptBtn1ActionPerformed
