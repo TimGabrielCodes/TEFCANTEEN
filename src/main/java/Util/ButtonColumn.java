@@ -43,7 +43,7 @@ public class ButtonColumn extends AbstractCellEditor
     private Object editorValue;
     private boolean isButtonColumnEditor;
     
-    private ArrayList<Food> listOfFood = new ArrayList<>();
+    private ArrayList<Food> listOfFood;
 
     /**
      *  Create the ButtonColumn to be used as a renderer and editor. The
@@ -134,7 +134,9 @@ public class ButtonColumn extends AbstractCellEditor
             editButton.setIcon( null );
         }
         
-        editButton.setActionCommand(listOfFood.get(row).getId()+"");
+//        final String foodInstanceId = ""+listOfFood.get(row).getId();
+//        
+//        editButton.setActionCommand(foodInstanceId);
         this.editorValue = value;
         return editButton;
     }
@@ -189,8 +191,10 @@ public class ButtonColumn extends AbstractCellEditor
             renderButton.setIcon( null );
         }
 
+//        final String foodInstanceId = ""+listOfFood.get(row).getId();
+//        
+//        renderButton.setActionCommand(foodInstanceId);
         
-        renderButton.setActionCommand(listOfFood.get(row).getId()+"");
         return renderButton;
     }
 
@@ -207,7 +211,8 @@ public class ButtonColumn extends AbstractCellEditor
         fireEditingStopped();
 
         //  Invoke the Action
-
+        final String foodInstanceId = ""+listOfFood.get(row).getId();
+        
         ActionEvent event = new ActionEvent(
             table,
             ActionEvent.ACTION_PERFORMED,

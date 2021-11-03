@@ -55,7 +55,7 @@ public class FoodDAOImpl implements FoodDAO {
                 food.setFood_name(resultSet.getString("food_name"));
                 food.setUnit(resultSet.getString("unit"));
                 food.setPrice(resultSet.getDouble("price"));
-                food.setAvailable(resultSet.getBoolean("available"));
+                food.setAvailable(resultSet.getByte("available"));
            
                 list.add(food);
             }
@@ -85,7 +85,7 @@ public class FoodDAOImpl implements FoodDAO {
             preparedStmt.setString(1, food.getFood_name());
             preparedStmt.setString(2, food.getUnit());
             preparedStmt.setDouble(3, food.getPrice());
-            preparedStmt.setBoolean(4, food.isAvailable());
+            preparedStmt.setByte(4, food.isAvailable());
   
             preparedStmt.executeUpdate();
             flag = true;
@@ -113,7 +113,7 @@ public class FoodDAOImpl implements FoodDAO {
                 food.setFood_name(resultSet.getString("food_name"));
                 food.setUnit(resultSet.getString("unit"));
                 food.setPrice(resultSet.getDouble("price"));
-                food.setAvailable(resultSet.getBoolean("available"));
+                food.setAvailable(resultSet.getByte("available"));
            
 
  
@@ -146,7 +146,7 @@ public class FoodDAOImpl implements FoodDAO {
                 food.setPrice(resultSet.getDouble("price"));
                 food.setFood_name(resultSet.getString("food_name"));
                 food.setUnit(resultSet.getString("unit"));
-                food.setAvailable(resultSet.getBoolean("available"));
+                food.setAvailable(resultSet.getByte("available"));
             }
 
         } catch (SQLException e) {
@@ -164,15 +164,24 @@ public class FoodDAOImpl implements FoodDAO {
         boolean flag = false;
 
         try {
-            String sql = "update food set name='" + food.getFood_name() + "', price=" + food.getPrice() + ", unit= '" + food.getPrice() +"', available =" + food.isAvailable();
+            String sql = "update food set food_name=?, price=?, unit= ?, available = ? where id= ?";
             connection = DBConnectionUtil.openConnection();
             preparedStmt = connection.prepareStatement(sql);
-            preparedStmt.executeUpdate();
+            preparedStmt.setString(1,food.getFood_name());
+            preparedStmt.setDouble(2, food.getPrice());
+            preparedStmt.setString(3, food.getUnit());
+            preparedStmt.setByte(4, food.isAvailable());
+            preparedStmt.setInt(5, food.getId());
+            
+            int id = preparedStmt.executeUpdate();
+            System.out.print(id);
             flag = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }catch (Exception e){
+            System.out.println(e.toString());
         }
         return flag;
     }

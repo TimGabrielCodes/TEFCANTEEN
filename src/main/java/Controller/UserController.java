@@ -14,15 +14,11 @@ import Model.User;
  * @author Antoni
  */
 public class UserController {
-    private String loginType = null;
     private User user = null;
     UserDAO userDAO = new UserDAOImpl();
     
     public boolean logUserIn(LoginBean loginBean){
-        
-      
         return userDAO.login(loginBean) == true;
-        
     }
     
     public void logUserOut(){
