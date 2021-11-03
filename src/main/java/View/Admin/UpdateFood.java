@@ -6,19 +6,32 @@ package View.Admin;
 
 import Controller.FoodController;
 import Model.Food;
-import java.awt.Color;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author mac
+ * @author FUJITSU
  */
-public class AddFood extends javax.swing.JFrame {
+public class UpdateFood extends javax.swing.JFrame {
 
     /**
-     * Creates new form AddFood
+     * Creates new form UpdateFood
      */
-    public AddFood() {
+    private Food food;
+    public UpdateFood(Food food) {
+        this.food = food;
         initComponents();
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //Display food details on component
+        foodName.setText(food.getFood_name());
+        foodPrice.setText(food.getPrice()+"");
+        for(int i=0; i<foodUnit.getItemCount(); i++){
+           if(food.getUnit().equals(foodUnit.getItemAt(i))){
+               foodUnit.setSelectedIndex(i);
+           }
+        }
     }
 
     /**
@@ -39,13 +52,11 @@ public class AddFood extends javax.swing.JFrame {
         foodName = new javax.swing.JTextField();
         foodPrice = new javax.swing.JTextField();
         foodUnit = new javax.swing.JComboBox<>();
-        goToHomeBtn = new javax.swing.JButton();
-        saveBtn = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        updateFoodBtn = new javax.swing.JButton();
         message = new javax.swing.JLabel();
-        viewFoods = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Add Food");
 
         jPanel1.setBackground(new java.awt.Color(254, 165, 0));
 
@@ -60,35 +71,28 @@ public class AddFood extends javax.swing.JFrame {
 
         jLabel5.setText("Price Per Unit:");
 
-        foodUnit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"Plate", "Piece", "Portion", "Bottle", " ", " " }));
+        foodUnit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Plate", "Piece", "Portion", "Bottle", " ", " " }));
         foodUnit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 foodUnitActionPerformed(evt);
             }
         });
 
-        goToHomeBtn.setText("Home");
-        goToHomeBtn.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("Back");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                goToHomeBtnActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
-        saveBtn.setText("Save Food");
-        saveBtn.addActionListener(new java.awt.event.ActionListener() {
+        updateFoodBtn.setText("Update Food");
+        updateFoodBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveBtnActionPerformed(evt);
+                updateFoodBtnActionPerformed(evt);
             }
         });
 
-        message.setForeground(Color.BLACK);
-
-        viewFoods.setText("View Foods");
-        viewFoods.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewFoodsActionPerformed(evt);
-            }
-        });
+        message.setForeground(new java.awt.Color(255, 51, 51));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -97,11 +101,11 @@ public class AddFood extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
+                        .addGap(55, 55, 55)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(foodName, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(208, 208, 208)
+                        .addGap(214, 214, 214)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(foodUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -114,19 +118,17 @@ public class AddFood extends javax.swing.JFrame {
                         .addGap(176, 176, 176)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(foodPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(234, 234, 234)
-                        .addComponent(goToHomeBtn)
-                        .addGap(44, 44, 44)
-                        .addComponent(viewFoods)
-                        .addGap(30, 30, 30)
-                        .addComponent(saveBtn)))
-                .addContainerGap(121, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(updateFoodBtn))
+                            .addComponent(foodPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(18, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(message, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(192, 192, 192))
+                .addGap(226, 226, 226))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,12 +149,11 @@ public class AddFood extends javax.swing.JFrame {
                     .addComponent(foodPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(goToHomeBtn)
-                    .addComponent(saveBtn)
-                    .addComponent(viewFoods))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButton1)
+                    .addComponent(updateFoodBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(message, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -173,17 +174,17 @@ public class AddFood extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_foodUnitActionPerformed
 
-    private void goToHomeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToHomeBtnActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
         new Dashboard().setVisible(true);        // TODO add your handling code here:
-    }//GEN-LAST:event_goToHomeBtnActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+    private void updateFoodBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateFoodBtnActionPerformed
         String name = foodName.getText();
         Double price = Double.parseDouble(foodPrice.getText());
         String unit = foodUnit.getSelectedItem().toString();
         FoodController foodController = new FoodController();
-        Food food = new Food();
+        
         food.setFood_name(name);
         food.setPrice(price);
         food.setUnit(unit);
@@ -191,64 +192,59 @@ public class AddFood extends javax.swing.JFrame {
         if(name.isBlank() || price.isNaN() || unit.isBlank()){
             message.setText("Invalid Entries");
         }else{
-        if(foodController.saveFood(food)){
-            message.setText(food.getFood_name()+" added successfully");
-            foodName.setText("");
-            foodUnit.setSelectedIndex(0);
-            foodPrice.setText("");
-        }else{
-            message.setText("Please fill details correctly");
+            if(foodController.updateFood(food)){
+                JOptionPane.showMessageDialog(rootPane, food.getFood_name()+" updated successfully");
+                new ListOfFoods().setVisible(true);
+                this.setVisible(false);
+                this.dispose();
+            }else{
+                message.setText("Please fill details correctly");
+            }
         }
-        }
-                // TODO add your handling code here:
-    }//GEN-LAST:event_saveBtnActionPerformed
-
-    private void viewFoodsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewFoodsActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-        new ListOfFoods().setVisible(true);
-    }//GEN-LAST:event_viewFoodsActionPerformed
+    }//GEN-LAST:event_updateFoodBtnActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddFood.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddFood.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddFood.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddFood.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AddFood().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(UpdateFood.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(UpdateFood.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(UpdateFood.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(UpdateFood.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new UpdateFood().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField foodName;
     private javax.swing.JTextField foodPrice;
     private javax.swing.JComboBox<String> foodUnit;
-    private javax.swing.JButton goToHomeBtn;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -256,7 +252,6 @@ public class AddFood extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel message;
-    private javax.swing.JButton saveBtn;
-    private javax.swing.JButton viewFoods;
+    private javax.swing.JButton updateFoodBtn;
     // End of variables declaration//GEN-END:variables
 }

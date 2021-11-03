@@ -31,17 +31,14 @@ public class FoodController {
     
     
     public Food getFood(int id){
-        
-        return null;
+        return foodDao.get(id);
     }
     
-    public void deleteFood(int id){
-        
-        
+    public boolean deleteFood(int id){
+        return foodDao.delete(id);
     }
     
-    public void updateFood(int id, Food newUpdate){
-        
-        
+    public boolean updateFood(Food newUpdate){
+        return foodDao.update(newUpdate);
     }
 }
