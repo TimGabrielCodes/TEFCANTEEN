@@ -143,7 +143,8 @@ public class ListOfFoods extends javax.swing.JFrame {
 
             private void search(String text) {
                 if(text.length() > 0){
-                    sorter.setRowFilter(RowFilter.regexFilter(text,1));
+
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)"+text,1));
                 }else{
                     sorter.setRowFilter(null);
                 }
@@ -212,6 +213,12 @@ public class ListOfFoods extends javax.swing.JFrame {
         });
 
         jLabel1.setText("Search");
+
+        searchField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -317,6 +324,10 @@ public class ListOfFoods extends javax.swing.JFrame {
         new Login().setVisible(true);
         this.setVisible(false);// TODO add your handling code here:
     }//GEN-LAST:event_jMenu2ActionPerformed
+
+    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchFieldActionPerformed
 
     /**
      * @param args the command line arguments

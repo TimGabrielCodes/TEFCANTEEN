@@ -126,7 +126,7 @@ public class POS extends javax.swing.JFrame {
 
             private void search(String text) {
                 if(text.length() > 0){
-                    sorter.setRowFilter(RowFilter.regexFilter(text,1));
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)"+text,1));
                 }else{
                     sorter.setRowFilter(null);
                 }
