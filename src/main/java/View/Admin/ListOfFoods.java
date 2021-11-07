@@ -8,17 +8,14 @@ import Controller.FoodController;
 import Model.Food;
 import Util.ButtonColumn;
 import Util.Cart;
+import View.Login;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.RowFilter;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -32,8 +29,8 @@ public class ListOfFoods extends javax.swing.JFrame {
     
     private FoodController foodController =  new FoodController();
     private ArrayList<Food> foods = (ArrayList<Food>) foodController.getFood();
-    private TableRowSorter sorter;
-    private String[] header = new String [] {"S/N", "Food Name", "Price", "Unit",  "Action",""};
+   
+    String[] header = new String [] {"S/N", "Food Name", "Price", "Unit",  "Action",""};
     
     public ListOfFoods() {
         initComponents();
@@ -83,6 +80,7 @@ public class ListOfFoods extends javax.swing.JFrame {
         
         for(int i=0; i<header.length; i++){
             foodTable.getColumnModel().getColumn(i).setHeaderValue(header[i]);//Set Header
+            foodTable.setRowHeight(i, 30);
         }
         
         ButtonColumn deleteFoodBtn = new ButtonColumn(foodTable, new AbstractAction(){
@@ -122,40 +120,6 @@ public class ListOfFoods extends javax.swing.JFrame {
             }
         },4,foods);
         
-        sorter = new TableRowSorter<>(foodTable.getModel());
-        foodTable.setRowSorter(sorter);
-        
-        searchField.getDocument().addDocumentListener(new DocumentListener(){
-            @Override
-            public void insertUpdate(DocumentEvent arg0) {
-                search(searchField.getText());
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent arg0) {
-                search(searchField.getText());
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent arg0) {
-                search(searchField.getText());
-            }
-
-            private void search(String text) {
-                if(text.length() > 0){
-                    sorter.setRowFilter(RowFilter.regexFilter(text,1));
-                }else{
-                    sorter.setRowFilter(null);
-                }
-            }
-            
-        });
-        
-        //Set row height
-        for(int i=0; i<foods.size(); i++){
-            foodTable.setRowHeight(i, 30);
-        }
-        
         jScrollPane1.setViewportView(foodTable);
     }
 
@@ -173,10 +137,10 @@ public class ListOfFoods extends javax.swing.JFrame {
         foodTable = new javax.swing.JTable();
         addFoodBtn = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         backBtn = new javax.swing.JButton();
-        searchField = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -202,16 +166,12 @@ public class ListOfFoods extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabel3.setText("TEF CANTEEN VENDING SYSTEM");
 
-        jLabel4.setText("jLabel4");
-
         backBtn.setText("Back");
         backBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backBtnActionPerformed(evt);
             }
         });
-
-        jLabel1.setText("Search");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -228,36 +188,42 @@ public class ListOfFoods extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(69, 69, 69)
+                        .addGap(125, 125, 125)
                         .addComponent(jLabel3)))
                 .addGap(65, 65, 65))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(searchField))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(addFoodBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(37, 37, 37))
         );
+
+        jMenu2.setText("User");
+        jMenu2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu2ActionPerformed(evt);
+            }
+        });
+
+        jMenuItem1.setText("Logout");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -271,6 +237,7 @@ public class ListOfFoods extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void addFoodBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFoodBtnActionPerformed
@@ -282,6 +249,18 @@ public class ListOfFoods extends javax.swing.JFrame {
         new Dashboard().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_backBtnActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        //         System.out.println("Clicked");
+        new Login().setVisible(true);
+        this.setVisible(false); // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+        //        System.out.println("Clicked");
+        new Login().setVisible(true);
+        this.setVisible(false);// TODO add your handling code here:
+    }//GEN-LAST:event_jMenu2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -322,11 +301,11 @@ public class ListOfFoods extends javax.swing.JFrame {
     private javax.swing.JButton addFoodBtn;
     private javax.swing.JButton backBtn;
     private javax.swing.JTable foodTable;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField searchField;
     // End of variables declaration//GEN-END:variables
 }
