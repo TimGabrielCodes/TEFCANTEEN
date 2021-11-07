@@ -15,7 +15,11 @@ import java.util.Comparator;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -29,8 +33,8 @@ public class ListOfFoods extends javax.swing.JFrame {
     
     private FoodController foodController =  new FoodController();
     private ArrayList<Food> foods = (ArrayList<Food>) foodController.getFood();
-   
-    String[] header = new String [] {"S/N", "Food Name", "Price", "Unit",  "Action",""};
+    private TableRowSorter sorter;
+    private String[] header = new String [] {"S/N", "Food Name", "Price", "Unit",  "Action",""};
     
     public ListOfFoods() {
         initComponents();
@@ -80,7 +84,6 @@ public class ListOfFoods extends javax.swing.JFrame {
         
         for(int i=0; i<header.length; i++){
             foodTable.getColumnModel().getColumn(i).setHeaderValue(header[i]);//Set Header
-            foodTable.setRowHeight(i, 30);
         }
         
         ButtonColumn deleteFoodBtn = new ButtonColumn(foodTable, new AbstractAction(){
@@ -119,6 +122,39 @@ public class ListOfFoods extends javax.swing.JFrame {
                 dispose();
             }
         },4,foods);
+        sorter = new TableRowSorter<>(foodTable.getModel());
+        foodTable.setRowSorter(sorter);
+        
+        searchField.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent arg0) {
+                search(searchField.getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent arg0) {
+                search(searchField.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent arg0) {
+                search(searchField.getText());
+            }
+
+            private void search(String text) {
+                if(text.length() > 0){
+                    sorter.setRowFilter(RowFilter.regexFilter(text,1));
+                }else{
+                    sorter.setRowFilter(null);
+                }
+            }
+            
+        });
+        
+        //Set row height
+        for(int i=0; i<foods.size(); i++){
+            foodTable.setRowHeight(i, 30);
+        }
         
         jScrollPane1.setViewportView(foodTable);
     }
@@ -138,6 +174,8 @@ public class ListOfFoods extends javax.swing.JFrame {
         addFoodBtn = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         backBtn = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        searchField = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -173,6 +211,8 @@ public class ListOfFoods extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Search");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -183,13 +223,20 @@ public class ListOfFoods extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(addFoodBtn)
                 .addGap(249, 249, 249))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(125, 125, 125)
-                        .addComponent(jLabel3)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(125, 125, 125)
+                                .addComponent(jLabel3)))))
                 .addGap(65, 65, 65))
         );
         jPanel1Layout.setVerticalGroup(
@@ -197,8 +244,14 @@ public class ListOfFoods extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(addFoodBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -229,7 +282,10 @@ public class ListOfFoods extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -301,11 +357,13 @@ public class ListOfFoods extends javax.swing.JFrame {
     private javax.swing.JButton addFoodBtn;
     private javax.swing.JButton backBtn;
     private javax.swing.JTable foodTable;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField searchField;
     // End of variables declaration//GEN-END:variables
 }
