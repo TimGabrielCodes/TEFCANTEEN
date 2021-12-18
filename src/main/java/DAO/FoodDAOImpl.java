@@ -7,7 +7,7 @@ package DAO;
 
 
 import Model.Food;
-import Model.Transaction2;
+import Model.Transaction;
 import Util.DBConnectionUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,14 +29,14 @@ public class FoodDAOImpl implements FoodDAO {
     Statement statement = null;
     ResultSet resultSet = null;
     List<Food> list = null;
-    List<Transaction2> Translist = null;
-    List<Transaction2> Translist2 = null;
-    List<Transaction2> trackList = null;
+    List<Transaction> Translist = null;
+    List<Transaction> Translist2 = null;
+    List<Transaction> trackList = null;
     Food food = null;
     PreparedStatement preparedStmt = null;
     UserDAO userDAO = new UserDAOImpl();
 
-    private Transaction2 transaction;
+    private Transaction transaction;
     
 
     @Override
@@ -205,12 +205,12 @@ public class FoodDAOImpl implements FoodDAO {
     }
 
     @Override
-    public boolean logTransaction(Transaction2 transaction) {
+    public boolean logTransaction(Transaction transaction) {
         boolean flag = false;
         try {
 
-            String sql = "insert into transaction( food_id, user_id, total_price, status, group_id) "
-                    + "values(?,?,?,?,?)";
+            String sql = "insert into transaction( food_name, price) "
+                    + "values(?,,?)";
             try {
                 connection = DBConnectionUtil.openConnection();
                 preparedStmt = connection.prepareStatement(sql);
@@ -218,12 +218,10 @@ public class FoodDAOImpl implements FoodDAO {
                 Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            int food_ID = transaction.getFood_id();
-            preparedStmt.setInt(1, food_ID);
-            preparedStmt.setInt(2, transaction.getUser_id());
-            preparedStmt.setDouble(3, transaction.getTotal_price());
-            preparedStmt.setString(4, transaction.getStatus());
-            preparedStmt.setInt(5, transaction.getGroup_id());
+           
+            preparedStmt.setString(1, transaction.getFood_name());
+            preparedStmt.setDouble(2, transaction.getPrice());
+  
 
             preparedStmt.execute();
             flag = true;
@@ -237,7 +235,7 @@ public class FoodDAOImpl implements FoodDAO {
 
 
     @Override
-    public List<Transaction2> getTrans() {
+    public List<Transaction> getTrans() {
         FoodDAO foodDAO = new FoodDAOImpl();
         try {
             Translist = new ArrayList<>();
@@ -248,14 +246,13 @@ public class FoodDAOImpl implements FoodDAO {
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
-                transaction = new Transaction2();
+                transaction = new Transaction();
                 transaction.setId(resultSet.getInt("id"));
-                transaction.setFood_id(resultSet.getInt("food_id"));
-                transaction.setUser_id(resultSet.getInt("user_id"));
-                transaction.setTotal_price(resultSet.getDouble("total_price"));
+                transaction.setFood_name(resultSet.getString("food_name"));
+               
+                transaction.setPrice(resultSet.getDouble("price"));
                 transaction.setTimestamp(resultSet.getTimestamp("time").toString().substring(0, 10));
-                transaction.setStatus(resultSet.getString("status"));
-                transaction.setGroup_id(resultSet.getInt("group_id"));
+               
                 Translist.add(transaction);
             }
 

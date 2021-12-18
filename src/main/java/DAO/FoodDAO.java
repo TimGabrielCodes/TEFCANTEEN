@@ -5,7 +5,7 @@
 package DAO;
 
 import Model.Food;
-import Model.Transaction2;
+import Model.Transaction;
 import java.util.List;
 
 /**
@@ -15,7 +15,7 @@ import java.util.List;
 public interface FoodDAO {
             List<Food> get();
 //        List<Food> getRestock();
-        List<Transaction2> getTrans();
+        List<Transaction> getTrans();
 //        List<Transaction> getUserTransactions(String name);
 //        List<Transaction> countTrans();
 //        List<Transaction> trackSales();
@@ -34,7 +34,7 @@ public interface FoodDAO {
     
 
 
-    public boolean logTransaction(Transaction2 transaction);
+    public boolean logTransaction(Transaction transaction);
 
 //    public void updateTransaction(Transaction transaction);
     
