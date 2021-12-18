@@ -66,7 +66,7 @@ public class Cart {
         str.append("\n\nTOTAL \t\t "+total);
         str.append("\n\nItems \t\t "+items);
         str.append("\n\nPlease Proceed to get your food");
-        str.append("Thank you for your patronage");
+        str.append("\n\nThank you for your patronage");
         return str.toString();
     }
 

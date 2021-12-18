@@ -210,7 +210,7 @@ public class FoodDAOImpl implements FoodDAO {
         try {
 
             String sql = "insert into transaction( food_name, price) "
-                    + "values(?,,?)";
+                    + "values(?,?)";
             try {
                 connection = DBConnectionUtil.openConnection();
                 preparedStmt = connection.prepareStatement(sql);

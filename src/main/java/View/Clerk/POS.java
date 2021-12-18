@@ -5,7 +5,9 @@
 package View.Clerk;
 
 import Controller.FoodController;
+import Controller.TransactionController;
 import Model.Food;
+import Model.Transaction;
 import Util.ButtonColumn;
 import Util.Cart;
 import Util.PrintReceipt;
@@ -36,6 +38,7 @@ public class POS extends javax.swing.JFrame {
     private String[] header = new String [] {"S/N", "Food Name", "Unit", "Price", "Action",""};
     private Cart cart = new Cart();
     private TableRowSorter sorter;
+    private TransactionController transController = new TransactionController();
     
     public POS() {
         initComponents();
@@ -284,11 +287,17 @@ public class POS extends javax.swing.JFrame {
                     // Iterating HashMap through for loop
         for (Map.Entry<String, Double> set :
              cart.getCartMap().entrySet()) {
- 
+                Transaction trans = new Transaction();
+                
             
             // Printing all elements of a Map
             System.out.println(set.getKey() + " = "
                                + set.getValue());
+            
+            trans.setFood_name(set.getKey());
+            trans.setPrice(set.getValue());
+            transController.saveTransaction(trans);
+            System.out.println("Saved " + trans.toString());
         }
 //
             PrintReceipt.printTextarea(jTextArea1);

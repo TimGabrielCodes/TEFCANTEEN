@@ -56,6 +56,11 @@ public class Transaction {
         this.price = price;
     }
 
+    @Override
+    public String toString() {
+        return "Transaction{" + "id=" + id + ", timestamp=" + timestamp + ", food_name=" + food_name + ", price=" + price + '}';
+    }
+
     
     
     
