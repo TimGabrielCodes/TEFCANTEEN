@@ -16,9 +16,10 @@ import java.util.Map;
  * @author FUJITSU
  */
 public class Cart {
-    private HashMap<String,Double> cartMap = new HashMap<>();
-    private HashMap<String, Integer> quantityCounter = new HashMap<>();
-    private HashMap<String, String> unitCounter = new HashMap<>();
+    private HashMap<String,Double> cartMap = new HashMap<>(); //Food name and price
+    private HashMap<String, Integer> quantityCounter = new HashMap<>(); //FOod name and quantity
+    private HashMap<String, String> unitCounter = new HashMap<>(); //Food name and UNit
+    private int items;
     
     public void addToCart(Food food){
         String foodName = food.getFood_name();
@@ -26,6 +27,7 @@ public class Cart {
             cartMap.put(foodName, food.getPrice());
             quantityCounter.put(foodName, 1);
             unitCounter.put(foodName, food.getUnit());
+            items += 1;
         }else{
             Double newPrice = cartMap.get(foodName) + food.getPrice();
             cartMap.put(foodName, newPrice);
@@ -45,6 +47,7 @@ public class Cart {
                 cartMap.remove(foodName);
                 quantityCounter.remove(foodName);
                 unitCounter.remove(foodName);
+                items -= 1;
             }
         }
     }
@@ -61,6 +64,31 @@ public class Cart {
         }
         
         str.append("\n\nTOTAL \t\t "+total);
+        str.append("\n\nItems \t\t "+items);
+        str.append("\n\nPlease Proceed to get your food");
+        str.append("Thank you for your patronage");
         return str.toString();
     }
+
+    public int getItems() {
+        return items;
+    }
+
+    public void setItems(int items) {
+        this.items = items;
+    }
+
+    public HashMap<String, Double> getCartMap() {
+        return cartMap;
+    }
+
+    public HashMap<String, Integer> getQuantityCounter() {
+        return quantityCounter;
+    }
+
+    public HashMap<String, String> getUnitCounter() {
+        return unitCounter;
+    }
+    
+    
 }

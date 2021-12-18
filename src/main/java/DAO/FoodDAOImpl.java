@@ -7,7 +7,7 @@ package DAO;
 
 
 import Model.Food;
-import Model.Transaction;
+import Model.Transaction2;
 import Util.DBConnectionUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,14 +29,14 @@ public class FoodDAOImpl implements FoodDAO {
     Statement statement = null;
     ResultSet resultSet = null;
     List<Food> list = null;
-    List<Transaction> Translist = null;
-    List<Transaction> Translist2 = null;
-    List<Transaction> trackList = null;
+    List<Transaction2> Translist = null;
+    List<Transaction2> Translist2 = null;
+    List<Transaction2> trackList = null;
     Food food = null;
     PreparedStatement preparedStmt = null;
     UserDAO userDAO = new UserDAOImpl();
 
-    private Transaction transaction;
+    private Transaction2 transaction;
     
 
     @Override
@@ -205,7 +205,7 @@ public class FoodDAOImpl implements FoodDAO {
     }
 
     @Override
-    public boolean logTransaction(Transaction transaction) {
+    public boolean logTransaction(Transaction2 transaction) {
         boolean flag = false;
         try {
 
@@ -237,7 +237,7 @@ public class FoodDAOImpl implements FoodDAO {
 
 
     @Override
-    public List<Transaction> getTrans() {
+    public List<Transaction2> getTrans() {
         FoodDAO foodDAO = new FoodDAOImpl();
         try {
             Translist = new ArrayList<>();
@@ -248,7 +248,7 @@ public class FoodDAOImpl implements FoodDAO {
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
-                transaction = new Transaction();
+                transaction = new Transaction2();
                 transaction.setId(resultSet.getInt("id"));
                 transaction.setFood_id(resultSet.getInt("food_id"));
                 transaction.setUser_id(resultSet.getInt("user_id"));

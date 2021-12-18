@@ -5,6 +5,8 @@
 package Controller;
 
 import Model.Transaction;
+import Model.Transaction2;
+import Util.Cart;
 import java.util.List;
 
 /**
@@ -12,17 +14,20 @@ import java.util.List;
  * @author FUJITSU
  */
 public class TransactionController {
-    public List<Transaction> getAllTransactions(String userId){
+    public List<Transaction2> getAllTransactions(String userId){
         
         return null;
     }
     
-    public Transaction getTransaction(Transaction transaction){
+    public Transaction2 getTransaction(Transaction2 transaction){
         
         return null;
     }
+    public void saveTransaction(Transaction trans){
+//        return true;
+    }
     
-    public Boolean printInvoice(Transaction transaction){
+    public Boolean printInvoice(Transaction2 transaction){
         
         return null;
     }

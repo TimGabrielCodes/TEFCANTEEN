@@ -12,6 +12,7 @@ import Util.PrintReceipt;
 import View.Login;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Map;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -158,7 +159,6 @@ public class POS extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         printReceiptBtn = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         searchField = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -193,8 +193,6 @@ public class POS extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabel3.setText("TEF CANTEEN VENDING SYSTEM");
 
-        jLabel4.setText("jLabel4");
-
         jLabel1.setText("Search");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -202,9 +200,7 @@ public class POS extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(69, 69, 69)
+                .addGap(175, 175, 175)
                 .addComponent(jLabel3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -227,9 +223,7 @@ public class POS extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -285,6 +279,18 @@ public class POS extends javax.swing.JFrame {
         if(jTextArea1.getText().isEmpty()){
             JOptionPane.showMessageDialog(rootPane, "The Receipt Panel is empty");
         }else{
+            System.out.println("About to add transactions");
+//             
+                    // Iterating HashMap through for loop
+        for (Map.Entry<String, Double> set :
+             cart.getCartMap().entrySet()) {
+ 
+            
+            // Printing all elements of a Map
+            System.out.println(set.getKey() + " = "
+                               + set.getValue());
+        }
+//
             PrintReceipt.printTextarea(jTextArea1);
             
         }
@@ -341,7 +347,6 @@ public class POS extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
