@@ -184,4 +184,21 @@ public class UserDAOImpl implements UserDAO {
 
 
   
-}}
+}
+@Override
+    public boolean deleteUser(int id) {
+        boolean flag = false;
+        try {
+            String sql = "DELETE FROM user WHERE id=" + id;
+            connection = DBConnectionUtil.openConnection();
+            preparedStmt = connection.prepareStatement(sql);
+            preparedStmt.executeUpdate();
+            flag = true;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return flag;
+    }}

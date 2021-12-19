@@ -8,6 +8,7 @@ import DAO.UserDAO;
 import DAO.UserDAOImpl;
 import Model.LoginBean;
 import Model.User;
+import java.util.ArrayList;
 
 /**
  *
@@ -44,14 +45,18 @@ public class UserController {
  public boolean saveUser(User user){
      return userDAO.saveUser(user);
  }
+ 
+ public boolean deleteUser(int id){
+     return userDAO.deleteUser(id);
+ }
     
     public User getUser(int id){
         
         return null;
     }
-    
-    public void deleteUser(int id){
-        
-        
+    public ArrayList<User> getUsers(){
+        return (ArrayList<User>) userDAO.get();
     }
+    
+   
 }

@@ -16,6 +16,8 @@ public class User {
     private String phone_number;
     private String user_name;
     private String password;
+    private String fullName;
+    private String role;
     private boolean admin;
     public User() {
     }
@@ -86,8 +88,33 @@ public class User {
         this.admin = admin;
     }
 
+    public String getFullName() {
+        this.fullName = this.first_name + " " + this.surn_name;
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole() {
+        if(admin){
+            this.role = "Admin";
+            
+        }else{
+            this.role = "Clerk";
+        }
+    }
+
+    
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", first_name=" + first_name + ", surn_name=" + surn_name + ", phone_number=" + phone_number + ", user_name=" + user_name + ", password=" + password + ", isAdmin=" + admin + '}';
+        return "User{" + "id=" + id + ", first_name=" + first_name + ", surn_name=" + surn_name + ", phone_number=" + phone_number + ", user_name=" + user_name + ", password=" + password + ", fullName=" + fullName + ", admin=" + admin + '}';
     }
+
+
 }

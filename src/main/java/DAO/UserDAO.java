@@ -22,5 +22,6 @@ public interface UserDAO {
     User get(String user_name);
    
     boolean login(LoginBean loginBean);
-     
+    
+    boolean deleteUser(int id);
 }
