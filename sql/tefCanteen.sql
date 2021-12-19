@@ -1,10 +1,10 @@
 -- -------------------------------------------------------------
--- TablePlus 3.12.2(358)
+-- TablePlus 4.5.0(396)
 --
 -- https://tableplus.com/
 --
 -- Database: tefCanteen
--- Generation Time: 2021-10-31 12:58:03.0320
+-- Generation Time: 2021-12-19 11:15:53.9790
 -- -------------------------------------------------------------
 
 
@@ -18,6 +18,7 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
+DROP TABLE IF EXISTS `food`;
 CREATE TABLE `food` (
   `id` int NOT NULL AUTO_INCREMENT,
   `food_name` varchar(45) DEFAULT NULL,
@@ -25,22 +26,18 @@ CREATE TABLE `food` (
   `price` decimal(20,2) DEFAULT NULL,
   `available` bit(2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
 
+DROP TABLE IF EXISTS `transaction`;
 CREATE TABLE `transaction` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `food_id` int DEFAULT NULL,
-  `user_id` int DEFAULT NULL,
-  `total_price` decimal(2,0) DEFAULT NULL,
-  `timestamp` datetime DEFAULT NULL,
-  `status` varchar(45) DEFAULT NULL,
-  `group_id` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `goup_id_UNIQUE` (`group_id`),
-  KEY `food_id` (`food_id`),
-  CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`food_id`) REFERENCES `food` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  `food_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `price` double NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `first_name` varchar(45) DEFAULT NULL,
@@ -50,16 +47,25 @@ CREATE TABLE `user` (
   `password` varchar(45) DEFAULT NULL,
   `isAdmin` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `unique_username` (`user_name`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 
 INSERT INTO `food` (`id`, `food_name`, `unit`, `price`, `available`) VALUES
-('1', 'Jollof Rice', 'Plate', '500.00', b'01'),
-('2', 'Beams', 'Plate', '200.00', b'01'),
-('3', 'Goat Meat', 'Portion', '200.00', b'01');
+(1, 'Jollof Rice', 'Plate', 500.00, b'01'),
+(2, 'Beans', 'Plate', 200.00, b'01'),
+(3, 'Goat Meat', 'Portion', 200.00, b'01'),
+(4, 'bread', 'Plate', 5000.00, NULL),
+(5, 'Amafulor', 'Plate', 5000.00, NULL),
+(7, 'suya', 'Portion', 300.00, b'01'),
+(8, 'Goat Meat Pepper Soup', 'Plate', 5000.00, b'01'),
+(9, 'Moi Moi', 'Plate', 5000.00, b'01');
 
 INSERT INTO `user` (`id`, `first_name`, `surn_name`, `phone_number`, `user_name`, `password`, `isAdmin`) VALUES
-('1', 'Timothy', 'Zinwota', '08127820880', 'timtim', 'timtim', '1');
+(1, 'Timothy', 'Zinwota', '08127820880', 'timtim', 'timtim', 1),
+(2, 'Clerk', 'CLerk', '09282728291', 'clerk', 'clerk', 0),
+(7, 'tom', 'tom', '832938293823', 'tom', 'tom', 1),
+(8, 'James', 'James', '081278272827', 'james', 'james', 0);
 
 
 
