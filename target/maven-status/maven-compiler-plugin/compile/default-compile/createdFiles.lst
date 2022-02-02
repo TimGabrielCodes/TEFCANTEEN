@@ -16,7 +16,6 @@ View/Admin/UpdateFood.class
 View/Login$1.class
 View/Admin/ListOfFoods$1.class
 View/Clerk/POS$8.class
-utils/DBConnectionUtil.class
 View/Admin/Transactions$2.class
 View/Admin/UpdateFood$5.class
 View/Clerk/POS$7.class

@@ -5,9 +5,11 @@
 package Util;
 
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.print.PageFormat;
+import java.awt.print.Paper;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
@@ -33,14 +35,29 @@ public class PrintReceipt implements Printable {
     public int print(Graphics g, PageFormat pageFormat, int pageIndex){
         if(pageIndex > 0){
             return (NO_SUCH_PAGE);
-        }else{
+        }else{    
             Graphics2D g2d = (Graphics2D)g;
             g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+            
+//            int width = (int)convertCmToPPI(8);
+//            int height = (int)pageFormat.getHeight();
+            
+            printComponent.setFont(new Font("Monospaced",Font.PLAIN,5));//Set the font
+//            printComponent.setSize((int)width, (int)height);//Set size
+            
             disableDoubleBuffering(printComponent);
             printComponent.paint(g2d);
             enableDoubleBuffering(printComponent);
-            return (PAGE_EXISTS);
+            return PAGE_EXISTS;
         }
+    }
+    
+    protected static double convertCmToPPI(double cm) {            
+	        return toPPI(cm * 0.393600787);            
+    }
+ 
+    protected static double toPPI(double inch) {            
+                    return inch * 72d;            //ppi is 1/72 of an inch
     }
 
     private void doPrint() {
@@ -49,6 +66,7 @@ public class PrintReceipt implements Printable {
         if(printerJob.printDialog()){
             try{
                 printerJob.print();
+                printComponent.setFont(new Font("Arial",Font.PLAIN, 13));//Reset the receipt view after printing
             }catch(PrinterException e){
                 System.out.println("Util.PrintReceipt.doPrint()"+e.toString()+"\n"+e.getMessage());
                 e.printStackTrace();
