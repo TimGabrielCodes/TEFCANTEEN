@@ -54,16 +54,22 @@ public class Cart {
     
     public String printCart(){
         Double total = 0.0;
-        StringBuffer str = new StringBuffer("TEF CANTEEN \n ITEM \t QUANTITY \t PRICE\n(NGN)\n\n");
+        int counter = 1;
+//        "TEF CANTEEN \n ITEM \t QUANTITY \t PRICE\n(NGN)\n\n"
+        StringBuffer str = new StringBuffer("TEF CANTEEN RECEIPT\n\n");
         
         for(Map.Entry<String, Double> entry : cartMap.entrySet()){
             final Double price = entry.getValue();
-            str.append(entry.getKey()+" \t "+quantityCounter.get(entry.getKey())+" "+
-                    unitCounter.get(entry.getKey())+"\t"+entry.getValue()+"\n");
+            
+            //entry.getKey()+" \t "+quantityCounter.get(entry.getKey())+" "+
+//                    unitCounter.get(entry.getKey())+"\t"+entry.getValue()+"\n",
+            str.append(counter+". \n ITEM: \t\t"+entry.getKey()+"  \n QUANTITY: \t\t"+quantityCounter.get(entry.getKey())+" "+
+                    unitCounter.get(entry.getKey())+"\n PRICE: \t\t"+entry.getValue()+" NGN \n");
             total += entry.getValue();
+            counter++;
         }
         
-        str.append("\n\nTOTAL \t\t "+total);
+        str.append("\n\nTOTAL \t\t "+total+" NGN");
         str.append("\n\nItems \t\t "+items);
         str.append("\n\nPlease Proceed to get your food");
         str.append("\n\nThank you for your patronage");

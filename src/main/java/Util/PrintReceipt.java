@@ -6,8 +6,11 @@ package Util;
 
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
 import java.awt.print.Printable;
@@ -22,13 +25,15 @@ import javax.swing.RepaintManager;
  */
 public class PrintReceipt implements Printable {
     private Component printComponent;
+    private String text;
     
-    public static void printTextarea(JTextArea jTextArea){
-        new PrintReceipt(jTextArea).doPrint();
+    public static void printTextarea(JTextArea jTextArea, String text){
+        new PrintReceipt(jTextArea, text).doPrint();
     }
 
-    private PrintReceipt(JTextArea jTextArea) {
+    private PrintReceipt(JTextArea jTextArea, String text) {
         this.printComponent = jTextArea;
+        this.text = text;
     }
 
     @Override
@@ -39,25 +44,28 @@ public class PrintReceipt implements Printable {
             Graphics2D g2d = (Graphics2D)g;
             g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
             
-//            int width = (int)convertCmToPPI(8);
-//            int height = (int)pageFormat.getHeight();
-            
-            printComponent.setFont(new Font("Monospaced",Font.PLAIN,5));//Set the font
-//            printComponent.setSize((int)width, (int)height);//Set size
+//            printComponent.setFont(new Font("Monospaced",Font.PLAIN,8));//Set the font
             
             disableDoubleBuffering(printComponent);
-            printComponent.paint(g2d);
+            
+//            FontRenderContext frc = g2d.getFontRenderContext();
+//            TextLayout tLayout = new TextLayout(text, new Font("Monospaced",Font.PLAIN,8), frc);
+            FontMetrics metrics=g2d.getFontMetrics(new Font("Arial",Font.BOLD,7));
+            int idLength = metrics.stringWidth("000000");
+            g2d.setFont(new Font("Monospaced",Font.PLAIN,8));
+            
+            String[] outputs = text.split("\n");
+            int y = 20;
+            for(int i = 0; i<outputs.length; i++){
+                g2d.drawString(outputs[i], 5, y);
+                y += 15;
+                System.out.println(y);
+            }
+            
+//            printComponent.paint(g2d);
             enableDoubleBuffering(printComponent);
             return PAGE_EXISTS;
         }
-    }
-    
-    protected static double convertCmToPPI(double cm) {            
-	        return toPPI(cm * 0.393600787);            
-    }
- 
-    protected static double toPPI(double inch) {            
-                    return inch * 72d;            //ppi is 1/72 of an inch
     }
 
     private void doPrint() {
@@ -66,7 +74,7 @@ public class PrintReceipt implements Printable {
         if(printerJob.printDialog()){
             try{
                 printerJob.print();
-                printComponent.setFont(new Font("Arial",Font.PLAIN, 13));//Reset the receipt view after printing
+//                printComponent.setFont(new Font("Arial",Font.PLAIN, 13));//Reset the receipt view after printing
             }catch(PrinterException e){
                 System.out.println("Util.PrintReceipt.doPrint()"+e.toString()+"\n"+e.getMessage());
                 e.printStackTrace();

@@ -299,8 +299,8 @@ public class POS extends javax.swing.JFrame {
             transController.saveTransaction(trans);
             System.out.println("Saved " + trans.toString());
         }
-//
-            PrintReceipt.printTextarea(jTextArea1);
+
+            PrintReceipt.printTextarea(jTextArea1, cart.printCart());
             
         }
     }//GEN-LAST:event_printReceiptBtnActionPerformed
