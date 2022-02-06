@@ -24,15 +24,13 @@ import javax.swing.RepaintManager;
  * @author FUJITSU
  */
 public class PrintReceipt implements Printable {
-    private Component printComponent;
     private String text;
     
-    public static void printTextarea(JTextArea jTextArea, String text){
-        new PrintReceipt(jTextArea, text).doPrint();
+    public static void printTextarea(String text){
+        new PrintReceipt(text).doPrint();
     }
 
-    private PrintReceipt(JTextArea jTextArea, String text) {
-        this.printComponent = jTextArea;
+    private PrintReceipt(String text) {
         this.text = text;
     }
 
@@ -44,26 +42,22 @@ public class PrintReceipt implements Printable {
             Graphics2D g2d = (Graphics2D)g;
             g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
             
-//            printComponent.setFont(new Font("Monospaced",Font.PLAIN,8));//Set the font
-            
-            disableDoubleBuffering(printComponent);
-            
-//            FontRenderContext frc = g2d.getFontRenderContext();
-//            TextLayout tLayout = new TextLayout(text, new Font("Monospaced",Font.PLAIN,8), frc);
-            FontMetrics metrics=g2d.getFontMetrics(new Font("Arial",Font.BOLD,7));
-            int idLength = metrics.stringWidth("000000");
-            g2d.setFont(new Font("Monospaced",Font.PLAIN,8));
+            Font defaultFont = new Font("Times",Font.PLAIN,7);
+            g2d.setFont(defaultFont);
             
             String[] outputs = text.split("\n");
             int y = 20;
             for(int i = 0; i<outputs.length; i++){
+                if(outputs[i].contains("TEF CANTEEN RECEIPT")){
+                    g2d.setFont(new Font("Arial",Font.BOLD, 10));
+                }
                 g2d.drawString(outputs[i], 5, y);
                 y += 15;
                 System.out.println(y);
+                
+                g2d.setFont(defaultFont);
             }
             
-//            printComponent.paint(g2d);
-            enableDoubleBuffering(printComponent);
             return PAGE_EXISTS;
         }
     }
@@ -74,7 +68,6 @@ public class PrintReceipt implements Printable {
         if(printerJob.printDialog()){
             try{
                 printerJob.print();
-//                printComponent.setFont(new Font("Arial",Font.PLAIN, 13));//Reset the receipt view after printing
             }catch(PrinterException e){
                 System.out.println("Util.PrintReceipt.doPrint()"+e.toString()+"\n"+e.getMessage());
                 e.printStackTrace();

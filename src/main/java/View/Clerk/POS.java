@@ -300,7 +300,7 @@ public class POS extends javax.swing.JFrame {
             System.out.println("Saved " + trans.toString());
         }
 
-            PrintReceipt.printTextarea(jTextArea1, cart.printCart());
+            PrintReceipt.printTextarea(cart.printCart());
             
         }
     }//GEN-LAST:event_printReceiptBtnActionPerformed
