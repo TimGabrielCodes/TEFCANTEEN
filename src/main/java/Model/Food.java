@@ -14,9 +14,13 @@ public class Food {
     private String food_name;
     private String unit;
     private Double price;
-    private boolean available;
+    private Byte available = 1;
+    
+    public Food(){
+        
+    }
 
-    public Food(int id, String food_name, String unit, Double price, boolean available) {
+    public Food(int id, String food_name, String unit, Double price,Byte available) {
         this.id = id;
         this.food_name = food_name;
         this.unit = unit;
@@ -56,16 +60,17 @@ public class Food {
         this.price = price;
     }
 
-    public boolean isAvailable() {
+    public Byte isAvailable() {
         return available;
     }
 
-    public void setAvailable(boolean available) {
+    public void setAvailable(Byte available) {
         this.available = available;
     }
 
     @Override
     public String toString() {
+        
         return "Food{" + "id=" + id + ", food_name=" + food_name + ", unit=" + unit + ", price=" + price + ", available=" + available + '}';
     }
     

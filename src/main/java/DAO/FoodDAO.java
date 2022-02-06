@@ -14,11 +14,11 @@ import java.util.List;
  */
 public interface FoodDAO {
             List<Food> get();
-        List<Food> getRestock();
+//        List<Food> getRestock();
         List<Transaction> getTrans();
-        List<Transaction> getUserTransactions(String name);
-        List<Transaction> countTrans();
-        List<Transaction> trackSales();
+//        List<Transaction> getUserTransactions(String name);
+//        List<Transaction> countTrans();
+//        List<Transaction> trackSales();
     boolean  saveFood(Food product);
    
     
@@ -36,9 +36,9 @@ public interface FoodDAO {
 
     public boolean logTransaction(Transaction transaction);
 
-    public void updateTransaction(Transaction transaction);
+//    public void updateTransaction(Transaction transaction);
     
-    int countFoods();
+
 
    
 
