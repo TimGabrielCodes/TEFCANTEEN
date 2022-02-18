@@ -1,11 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package View.Admin;
 
 import Controller.FoodController;
 import Controller.TransactionController;
+import Controller.UserController;
 import Model.Transaction;
 import Util.Cart;
 import View.Login;
@@ -29,7 +26,7 @@ public class Transactions extends javax.swing.JFrame {
     private FoodController foodController =  new FoodController();
     private TransactionController transController = new TransactionController();
     private ArrayList<Transaction> transList;
-    private String[] header = new String [] {"S/N", "Food Name", "Price", "Date"};
+    private String[] header = new String [] {"Transaction Id", "Staff Name", "Price", "Date"};
     private Cart cart = new Cart();
     private TableRowSorter sorter;
 //    private TransactionController transController = new TransactionController();
@@ -48,7 +45,7 @@ public class Transactions extends javax.swing.JFrame {
 
             @Override
             public int getColumnCount() {
-                return 6;
+                return 4;
             }
 
             @Override
@@ -59,9 +56,10 @@ public class Transactions extends javax.swing.JFrame {
                     case 0:
                         return transInstance.getId();
                     case 1:
-                        return transInstance.getFood_name();
+                        UserController userController  = new UserController();
+                        return userController.getUser(transInstance.getUser_id()).getFullName();
                     case 2:
-                        return transInstance.getPrice();
+                        return transInstance.getTotal_price();
                     case 3:
                         return transInstance.getTimestamp();
                     
@@ -130,10 +128,14 @@ public class Transactions extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        printReceiptBtn = new javax.swing.JButton();
+        backBtn = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         searchField = new javax.swing.JTextField();
+        printReceiptBtn1 = new javax.swing.JButton();
+        printReceiptBtn2 = new javax.swing.JButton();
+        printReceiptBtn3 = new javax.swing.JButton();
+        printReceiptBtn4 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -152,10 +154,10 @@ public class Transactions extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        printReceiptBtn.setText("Back");
-        printReceiptBtn.addActionListener(new java.awt.event.ActionListener() {
+        backBtn.setText("Back");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                printReceiptBtnActionPerformed(evt);
+                backBtnActionPerformed(evt);
             }
         });
 
@@ -163,6 +165,34 @@ public class Transactions extends javax.swing.JFrame {
         jLabel3.setText("TEF CANTEEN VENDING SYSTEM");
 
         jLabel1.setText("Search");
+
+        printReceiptBtn1.setText("Print Daily");
+        printReceiptBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printReceiptBtn1ActionPerformed(evt);
+            }
+        });
+
+        printReceiptBtn2.setText("Print Weekly");
+        printReceiptBtn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printReceiptBtn2ActionPerformed(evt);
+            }
+        });
+
+        printReceiptBtn3.setText("Print Monthly");
+        printReceiptBtn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printReceiptBtn3ActionPerformed(evt);
+            }
+        });
+
+        printReceiptBtn4.setText("Print Yearly");
+        printReceiptBtn4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printReceiptBtn4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -172,33 +202,48 @@ public class Transactions extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(103, 103, 103)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel3)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(229, 229, 229)
-                        .addComponent(printReceiptBtn))
+                                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 804, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(70, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 811, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(backBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(printReceiptBtn1)
+                                .addGap(18, 18, 18)
+                                .addComponent(printReceiptBtn2)
+                                .addGap(18, 18, 18)
+                                .addComponent(printReceiptBtn3)
+                                .addGap(18, 18, 18)
+                                .addComponent(printReceiptBtn4)
+                                .addGap(26, 26, 26)))))
+                .addGap(70, 70, 70))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addContainerGap()
                 .addComponent(jLabel3)
-                .addGap(6, 6, 6)
+                .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(searchField)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
                 .addGap(4, 4, 4)
-                .addComponent(printReceiptBtn))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(backBtn)
+                    .addComponent(printReceiptBtn1)
+                    .addComponent(printReceiptBtn2)
+                    .addComponent(printReceiptBtn3)
+                    .addComponent(printReceiptBtn4)))
         );
 
         jMenu2.setText("User");
@@ -249,11 +294,27 @@ public class Transactions extends javax.swing.JFrame {
         this.setVisible(false); // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void printReceiptBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printReceiptBtnActionPerformed
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
      
         this.setVisible(false);
         new Dashboard().setVisible(true);
-    }//GEN-LAST:event_printReceiptBtnActionPerformed
+    }//GEN-LAST:event_backBtnActionPerformed
+
+    private void printReceiptBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printReceiptBtn1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_printReceiptBtn1ActionPerformed
+
+    private void printReceiptBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printReceiptBtn2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_printReceiptBtn2ActionPerformed
+
+    private void printReceiptBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printReceiptBtn3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_printReceiptBtn3ActionPerformed
+
+    private void printReceiptBtn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printReceiptBtn4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_printReceiptBtn4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -293,6 +354,7 @@ public class Transactions extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu2;
@@ -301,7 +363,10 @@ public class Transactions extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JButton printReceiptBtn;
+    private javax.swing.JButton printReceiptBtn1;
+    private javax.swing.JButton printReceiptBtn2;
+    private javax.swing.JButton printReceiptBtn3;
+    private javax.swing.JButton printReceiptBtn4;
     private javax.swing.JTextField searchField;
     // End of variables declaration//GEN-END:variables
 }

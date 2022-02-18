@@ -209,8 +209,8 @@ public class FoodDAOImpl implements FoodDAO {
         boolean flag = false;
         try {
 
-            String sql = "insert into transaction( food_name, price) "
-                    + "values(?,?)";
+            String sql = "insert into transaction(user_id, total_price,cart, status, timestamp)"
+                    + "values(?,?,?,?,?)";
             try {
                 connection = DBConnectionUtil.openConnection();
                 preparedStmt = connection.prepareStatement(sql);
@@ -219,9 +219,11 @@ public class FoodDAOImpl implements FoodDAO {
             }
 
            
-            preparedStmt.setString(1, transaction.getFood_name());
-            preparedStmt.setDouble(2, transaction.getPrice());
-  
+            preparedStmt.setInt(1, transaction.getUser_id());
+            preparedStmt.setDouble(2, transaction.getTotal_price());
+            preparedStmt.setString(4, transaction.getStatus());
+            preparedStmt.setString(5, transaction.getTimestamp());
+
 
             preparedStmt.execute();
             flag = true;
@@ -248,10 +250,10 @@ public class FoodDAOImpl implements FoodDAO {
             while (resultSet.next()) {
                 transaction = new Transaction();
                 transaction.setId(resultSet.getInt("id"));
-                transaction.setFood_name(resultSet.getString("food_name"));
-               
-                transaction.setPrice(resultSet.getDouble("price"));
-                transaction.setTimestamp(resultSet.getTimestamp("time").toString().substring(0, 10));
+                transaction.setUser_id(resultSet.getInt("user_id"));
+                transaction.setTotal_price(resultSet.getDouble("total_price"));
+                transaction.setTimestamp(resultSet.getString("timestamp"));
+                transaction.setStatus(resultSet.getString("status"));
                
                 Translist.add(transaction);
             }
@@ -265,9 +267,6 @@ public class FoodDAOImpl implements FoodDAO {
 
   
     }
-
-
-
 
 }
 

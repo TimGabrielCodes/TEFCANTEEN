@@ -139,9 +139,6 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="/Users/mac/Downloads/TEFCANTEEN/src/Resources/logo.png"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="jLabel4"/>
           </Properties>
         </Component>

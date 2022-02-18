@@ -9,19 +9,20 @@ package Model;
 //A transaction is generated whenever food is sold and a receipt is printed
 public class Transaction {
     private int id;
+    private int user_id;
+    private Double total_price;
+    private String status = "Paid";
     private String timestamp;
-    private String food_name;
-    private double price;
     
     public Transaction(){
         
     }
 
-    public Transaction(int id, String timestamp, String food_name, double price) {
+    public Transaction(int id, int user_id, Double total_price, String timestamp) {
         this.id = id;
+        this.user_id = user_id;
+        this.total_price = total_price;
         this.timestamp = timestamp;
-        this.food_name = food_name;
-        this.price = price;
     }
 
     public int getId() {
@@ -32,6 +33,31 @@ public class Transaction {
         this.id = id;
     }
 
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public Double getTotal_price() {
+        return total_price;
+    }
+
+    public void setTotal_price(Double total_price) {
+        this.total_price = total_price;
+    }
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getTimestamp() {
         return timestamp;
     }
@@ -39,31 +65,11 @@ public class Transaction {
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
-
-    public String getFood_name() {
-        return food_name;
-    }
-
-    public void setFood_name(String food_name) {
-        this.food_name = food_name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
+    
+    
     @Override
     public String toString() {
-        return "Transaction{" + "id=" + id + ", timestamp=" + timestamp + ", food_name=" + food_name + ", price=" + price + '}';
+        return "Transaction{" + "id=" + id + ", user_id=" + user_id + ", total_price=" + total_price+ ", status=" + status + ", timestamp=" + timestamp+ '}';
     }
-
-    
-    
-    
-    
     
 }
