@@ -10,10 +10,12 @@ import Model.Food;
 import Model.Transaction;
 import Util.ButtonColumn;
 import Util.Cart;
-import Util.PrintReceipt;
+import Util.LoggedInUserHandler;
+import Util.PrinterService;
 import View.Login;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -284,24 +286,25 @@ public class POS extends javax.swing.JFrame {
         }else{
             System.out.println("About to add transactions");
 //             
-                    // Iterating HashMap through for loop
-        for (Map.Entry<String, Double> set :
-             cart.getCartMap().entrySet()) {
-                Transaction trans = new Transaction();
-                
+            // Iterating HashMap through for loop
+            for (Map.Entry<Food, Double> set : cart.getCartMap().entrySet()) {
+                // Printing all elements of a Map
+                System.out.println(set.getKey() + " = "
+                                   + set.getValue());
+            }
             
-            // Printing all elements of a Map
-            System.out.println(set.getKey() + " = "
-                               + set.getValue());
+            Transaction trans = new Transaction();
+            trans.setUser_id(LoggedInUserHandler.getLoggedInUserId());
+            trans.setTotal_price(cart.getTotalPrice());
+            //Used default status set in model
+            trans.setTimestamp(new Date().getTime());
             
-            trans.setFood_name(set.getKey());
-            trans.setPrice(set.getValue());
             transController.saveTransaction(trans);
+                
             System.out.println("Saved " + trans.toString());
-        }
-//
-            PrintReceipt.printTextarea(jTextArea1);
-            
+
+            //CALL printer
+            PrinterService.doPrint(cart.printCart());
         }
     }//GEN-LAST:event_printReceiptBtnActionPerformed
 

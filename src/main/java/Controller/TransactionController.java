@@ -1,43 +1,87 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controller;
 
 import DAO.FoodDAO;
 import DAO.FoodDAOImpl;
 import Model.Transaction;
-import Model.Transaction2;
 import Util.Cart;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-/**
- *
- * @author FUJITSU
- */
 public class TransactionController {
-    public List<Transaction> getAllTransactions(){
-        
-          FoodDAO foodDAO = new FoodDAOImpl();
-           ArrayList<Transaction> transList;
-      transList =  (ArrayList<Transaction>) foodDAO.getTrans();
-      return transList;
+    FoodDAO foodDAO = new FoodDAOImpl();
+     ArrayList<Transaction> transList;
+
+    public TransactionController() {
+        transList =  (ArrayList<Transaction>) foodDAO.getTrans();
     }
     
-    public Transaction2 getTransaction(Transaction2 transaction){
-        
-        return null;
+    public List<Transaction> getAllTransactions(){
+        transList =  (ArrayList<Transaction>) foodDAO.getTrans();
+        return transList;
     }
+    
+   
     public void saveTransaction(Transaction trans){
-        FoodDAO foodDAO = new FoodDAOImpl();
         foodDAO.logTransaction(trans);
     }
     
-    public Boolean printInvoice(Transaction2 transaction){
+    public List<Transaction> getTodayTransactions(){
+        List<Transaction> t = new ArrayList<>();
         
-        return null;
+        Calendar cal = resetCalendar();
+        long todaysTimestamp = cal.getTimeInMillis();
+        
+        for(Transaction trans : transList){
+            
+            if(trans.getTimestamp() >= todaysTimestamp){
+                t.add(trans);
+            }
+        }
+        return t;
     }
     
+    public List<Transaction> getThisWeekTransactions(){
+        List<Transaction> t = new ArrayList<>();
+        
+        Calendar cal = resetCalendar();
+        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+        long firstDayOfWeekTimestamp = cal.getTimeInMillis();
+        
+        for(Transaction trans : transList){
+            
+            if(trans.getTimestamp() >= firstDayOfWeekTimestamp){
+                t.add(trans);
+            }
+        }
+        return t;
+    }
     
+    public List<Transaction> getThisMonthTransactions(){
+        List<Transaction> t = new ArrayList<>();
+        
+        Calendar cal = resetCalendar();
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        long firstDayOfMonthTimestamp = cal.getTimeInMillis();
+        
+        for(Transaction trans : transList){
+            
+            if(trans.getTimestamp() >= firstDayOfMonthTimestamp){
+                t.add(trans);
+            }
+        }
+        return t;
+    }
+
+    private Calendar resetCalendar() {
+        //Reset Calendar
+        //Provide clean calendar instance that has been reset to 00:00 of today
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.clear(Calendar.MINUTE);
+        cal.clear(Calendar.SECOND);
+        cal.clear(Calendar.MILLISECOND);
+        
+        return cal;
+    }
 }

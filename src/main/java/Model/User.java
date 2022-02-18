@@ -116,5 +116,4 @@ public class User {
         return "User{" + "id=" + id + ", first_name=" + first_name + ", surn_name=" + surn_name + ", phone_number=" + phone_number + ", user_name=" + user_name + ", password=" + password + ", fullName=" + fullName + ", admin=" + admin + '}';
     }
 
-
 }

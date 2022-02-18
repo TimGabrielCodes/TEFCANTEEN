@@ -41,6 +41,4 @@ public class LoginBean {
         return "Login{" + "username=" + username + ", password=" + password + '}';
     }
     
-    
-    
 }

@@ -9,6 +9,7 @@ import DAO.UserDAO;
 import DAO.UserDAOImpl;
 import Model.LoginBean;
 import Model.User;
+import Util.LoggedInUserHandler;
 import View.Admin.Dashboard;
 import View.Clerk.POS;
 import java.awt.event.WindowEvent;
@@ -158,11 +159,13 @@ public class Login extends javax.swing.JFrame {
             loggedIn = userDAO.get(login.getUsername());
             this.setVisible(false);
             if(loggedIn.isAdmin()){
-            new Dashboard().setVisible(true);
+                new Dashboard().setVisible(true);
             }
             else{
-            new POS().setVisible(true);
+                new POS().setVisible(true);
             }
+            
+            LoggedInUserHandler.setLoggedInUserId(loggedIn.getId());
         } else{
             JOptionPane.showMessageDialog(rootPane, "Incorrect Credentials! Try Again");
         }

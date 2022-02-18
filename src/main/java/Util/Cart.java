@@ -8,6 +8,7 @@ import Model.Food;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,37 +17,38 @@ import java.util.Map;
  * @author FUJITSU
  */
 public class Cart {
-    private HashMap<String,Double> cartMap = new HashMap<>(); //Food name and price
-    private HashMap<String, Integer> quantityCounter = new HashMap<>(); //FOod name and quantity
-    private HashMap<String, String> unitCounter = new HashMap<>(); //Food name and UNit
+    private HashMap<Food,Double> cartMap = new HashMap<>(); //Food name and price
+    private HashMap<Food, Integer> quantityCounter = new HashMap<>(); //FOod name and quantity
+    private HashMap<Food, String> unitCounter = new HashMap<>(); //Food name and UNit
     private int items;
+    private int totalPrice = 0;
     
     public void addToCart(Food food){
-        String foodName = food.getFood_name();
-        if(cartMap.get(foodName) == null){
-            cartMap.put(foodName, food.getPrice());
-            quantityCounter.put(foodName, 1);
-            unitCounter.put(foodName, food.getUnit());
+//        String foodName = food.getFood_name();
+        if(cartMap.get(food) == null){
+            cartMap.put(food, food.getPrice());
+            quantityCounter.put(food, 1);
+            unitCounter.put(food, food.getUnit());
             items += 1;
         }else{
-            Double newPrice = cartMap.get(foodName) + food.getPrice();
-            cartMap.put(foodName, newPrice);
-            quantityCounter.put(foodName, 
-                    quantityCounter.get(foodName) + 1);
+            Double newPrice = cartMap.get(food) + food.getPrice();
+            cartMap.put(food, newPrice);
+            quantityCounter.put(food, 
+                    quantityCounter.get(food) + 1);
         }
     }
     
     public void removeFromCart(Food food){
-        String foodName = food.getFood_name();
-        Double foodPrice = cartMap.get(foodName);
+//        String foodName = food.getFood_name();
+        Double foodPrice = cartMap.get(food);
         if(foodPrice != null){
             if(foodPrice > food.getPrice()){
-                cartMap.put(foodName, foodPrice - food.getPrice());
-                quantityCounter.put(foodName, quantityCounter.get(foodName) - 1);
+                cartMap.put(food, foodPrice - food.getPrice());
+                quantityCounter.put(food, quantityCounter.get(food) - 1);
             }else{
-                cartMap.remove(foodName);
-                quantityCounter.remove(foodName);
-                unitCounter.remove(foodName);
+                cartMap.remove(food);
+                quantityCounter.remove(food);
+                unitCounter.remove(food);
                 items -= 1;
             }
         }
@@ -54,19 +56,30 @@ public class Cart {
     
     public String printCart(){
         Double total = 0.0;
-        StringBuffer str = new StringBuffer("TEF CANTEEN \n ITEM \t QUANTITY \t PRICE\n(NGN)\n\n");
+        int counter = 1;
         
-        for(Map.Entry<String, Double> entry : cartMap.entrySet()){
+        StringBuffer str = new StringBuffer("TEF CANTEEN RECEIPT\n\n");
+        str.append("Date: "+new Date());
+        str.append("\n__________________________________________\n");
+        
+        for(Map.Entry<Food, Double> entry : cartMap.entrySet()){
             final Double price = entry.getValue();
-            str.append(entry.getKey()+" \t "+quantityCounter.get(entry.getKey())+" "+
-                    unitCounter.get(entry.getKey())+"\t"+entry.getValue()+"\n");
+            
+            //entry.getKey()+" \t "+quantityCounter.get(entry.getKey())+" "+
+//                    unitCounter.get(entry.getKey())+"\t"+entry.getValue()+"\n",
+            str.append(counter+". \n"
+                    + " FOOD NAME: \t\t"+entry.getKey().getFood_name()+"  \n"
+                            + " QUANTITY: \t\t"+quantityCounter.get(entry.getKey())+" "+unitCounter.get(entry.getKey())+"\n"
+                                    + " PRICE: \t\t"+entry.getValue()+" NGN \n");
             total += entry.getValue();
+            counter++;
         }
         
-        str.append("\n\nTOTAL \t\t "+total);
+        str.append("__________________________________________");
+        str.append("\n\nTOTAL \t\t "+total+" NGN");
         str.append("\n\nItems \t\t "+items);
         str.append("\n\nPlease Proceed to get your food");
-        str.append("\n\nThank you for your patronage");
+        str.append("\n\nThank you for your patronage\n\n\n\n");
         return str.toString();
     }
 
@@ -78,17 +91,22 @@ public class Cart {
         this.items = items;
     }
 
-    public HashMap<String, Double> getCartMap() {
+    public HashMap<Food, Double> getCartMap() {
         return cartMap;
     }
 
-    public HashMap<String, Integer> getQuantityCounter() {
+    public HashMap<Food, Integer> getQuantityCounter() {
         return quantityCounter;
     }
 
-    public HashMap<String, String> getUnitCounter() {
+    public HashMap<Food, String> getUnitCounter() {
         return unitCounter;
     }
     
-    
+    public double getTotalPrice(){
+        for(Map.Entry<Food, Double> entry : cartMap.entrySet()){
+            totalPrice += entry.getValue();
+        }
+        return totalPrice;
+    }
 }
