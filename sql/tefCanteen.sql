@@ -10,8 +10,6 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -44,7 +42,7 @@ INSERT INTO `food` (`id`, `food_name`, `unit`, `price`, `available`) VALUES
 (3, 'Goat Meat', 'Portion', 200.00, b'01'),
 (4, 'bread', 'Plate', 5000.00, NULL),
 (5, 'Amafulor', 'Plate', 5000.00, NULL),
-(7, 'suya', 'Portion', 300.00, b'01'),
+(7, 'suya', 'Portion', 300.00, NULL),
 (8, 'Goat Meat Pepper Soup', 'Plate', 5000.00, b'01'),
 (9, 'Moi Moi', 'Plate', 5000.00, b'01');
 
