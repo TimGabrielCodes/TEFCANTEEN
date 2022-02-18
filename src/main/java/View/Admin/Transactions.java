@@ -5,13 +5,16 @@ import Controller.TransactionController;
 import Controller.UserController;
 import Model.Transaction;
 import Util.Cart;
+import Util.PrinterService;
 import View.Login;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 /**
  *
@@ -32,48 +35,12 @@ public class Transactions extends javax.swing.JFrame {
 //    private TransactionController transController = new TransactionController();
     
     public Transactions() {
-        this.transList = (ArrayList<Transaction>) transController.getAllTransactions();
+        this.transList = (ArrayList<Transaction>)transController.getAllTransactions();
         initComponents();
         
   
                 
-        jTable1.setModel(new AbstractTableModel(){
-            @Override
-            public int getRowCount() {
-                return transList.size();
-            }
-
-            @Override
-            public int getColumnCount() {
-                return 4;
-            }
-
-            @Override
-            public Object getValueAt(int rowIndex, int columnIndex) {
-               
-               Transaction transInstance = transList.get(rowIndex);
-                switch(columnIndex){
-                    case 0:
-                        return transInstance.getId();
-                    case 1:
-                        UserController userController  = new UserController();
-                        return userController.getUser(transInstance.getUser_id()).getFullName();
-                    case 2:
-                        return transInstance.getTotal_price();
-                    case 3:
-                        return transInstance.getTimestamp();
-                    
-                }
-                
-                return null;
-            }
-
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return true;
-            }
-            
-        });
+        jTable1.setModel(getModel());
         
         for(int i=0; i<header.length; i++){
             jTable1.getColumnModel().getColumn(i).setHeaderValue(header[i]);//Set Header
@@ -132,10 +99,12 @@ public class Transactions extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         searchField = new javax.swing.JTextField();
-        printReceiptBtn1 = new javax.swing.JButton();
-        printReceiptBtn2 = new javax.swing.JButton();
-        printReceiptBtn3 = new javax.swing.JButton();
-        printReceiptBtn4 = new javax.swing.JButton();
+        printTransaction = new javax.swing.JButton();
+        viewMonthTransactionBtn = new javax.swing.JButton();
+        viewWeekTransactionBtn = new javax.swing.JButton();
+        viewTodayTransactionBtn = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        showAllTransactionBtn = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -164,33 +133,48 @@ public class Transactions extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabel3.setText("TEF CANTEEN VENDING SYSTEM");
 
-        jLabel1.setText("Search");
+        jLabel1.setText("Show");
 
-        printReceiptBtn1.setText("Print Daily");
-        printReceiptBtn1.addActionListener(new java.awt.event.ActionListener() {
+        searchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                printReceiptBtn1ActionPerformed(evt);
+                searchFieldActionPerformed(evt);
             }
         });
 
-        printReceiptBtn2.setText("Print Weekly");
-        printReceiptBtn2.addActionListener(new java.awt.event.ActionListener() {
+        printTransaction.setText("Print");
+        printTransaction.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                printReceiptBtn2ActionPerformed(evt);
+                printTransactionActionPerformed(evt);
             }
         });
 
-        printReceiptBtn3.setText("Print Monthly");
-        printReceiptBtn3.addActionListener(new java.awt.event.ActionListener() {
+        viewMonthTransactionBtn.setText("This Month");
+        viewMonthTransactionBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                printReceiptBtn3ActionPerformed(evt);
+                viewMonthTransactionBtnActionPerformed(evt);
             }
         });
 
-        printReceiptBtn4.setText("Print Yearly");
-        printReceiptBtn4.addActionListener(new java.awt.event.ActionListener() {
+        viewWeekTransactionBtn.setText("This Week");
+        viewWeekTransactionBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                printReceiptBtn4ActionPerformed(evt);
+                viewWeekTransactionBtnActionPerformed(evt);
+            }
+        });
+
+        viewTodayTransactionBtn.setText("Today");
+        viewTodayTransactionBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewTodayTransactionBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Search");
+
+        showAllTransactionBtn.setText("RESET");
+        showAllTransactionBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showAllTransactionBtnActionPerformed(evt);
             }
         });
 
@@ -199,51 +183,57 @@ public class Transactions extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(103, 103, 103)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(63, 63, 63)
+                                .addComponent(jLabel3))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(viewTodayTransactionBtn)
+                                .addGap(18, 18, 18)
+                                .addComponent(viewWeekTransactionBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(viewMonthTransactionBtn)
+                                .addGap(18, 18, 18)
+                                .addComponent(showAllTransactionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 25, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 811, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(backBtn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(printReceiptBtn1)
-                                .addGap(18, 18, 18)
-                                .addComponent(printReceiptBtn2)
-                                .addGap(18, 18, 18)
-                                .addComponent(printReceiptBtn3)
-                                .addGap(18, 18, 18)
-                                .addComponent(printReceiptBtn4)
-                                .addGap(26, 26, 26)))))
-                .addGap(70, 70, 70))
+                                .addComponent(printTransaction)))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addGap(16, 16, 16)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(searchField)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(viewTodayTransactionBtn)
+                    .addComponent(viewWeekTransactionBtn)
+                    .addComponent(viewMonthTransactionBtn)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(showAllTransactionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addGap(4, 4, 4)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(backBtn)
-                    .addComponent(printReceiptBtn1)
-                    .addComponent(printReceiptBtn2)
-                    .addComponent(printReceiptBtn3)
-                    .addComponent(printReceiptBtn4)))
+                    .addComponent(printTransaction)))
         );
 
         jMenu2.setText("User");
@@ -300,21 +290,46 @@ public class Transactions extends javax.swing.JFrame {
         new Dashboard().setVisible(true);
     }//GEN-LAST:event_backBtnActionPerformed
 
-    private void printReceiptBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printReceiptBtn1ActionPerformed
+    private void printTransactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printTransactionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_printReceiptBtn1ActionPerformed
+        UserController userController = new UserController();
+        int i = 1;
+        StringBuilder str = new StringBuilder("_______________________________________");
+        for(Transaction trans : this.transList){
+            str.append(i+". "+trans.getId()+"\t"+userController.getUser(trans.getUser_id()).getFullName()
+                    +"\t"+trans.getTotal_price()+"\t"+new Date(trans.getTimestamp())+"\t"+trans.getStatus());
+        }
+        str.append("_______________________________________");
+        PrinterService.doPrint(str.toString());
+    }//GEN-LAST:event_printTransactionActionPerformed
 
-    private void printReceiptBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printReceiptBtn2ActionPerformed
+    private void viewMonthTransactionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewMonthTransactionBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_printReceiptBtn2ActionPerformed
+        this.transList = (ArrayList<Transaction>) transController.getThisMonthTransactions();
+        jTable1.setModel(getModel());
+    }//GEN-LAST:event_viewMonthTransactionBtnActionPerformed
 
-    private void printReceiptBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printReceiptBtn3ActionPerformed
+    private void viewWeekTransactionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewWeekTransactionBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_printReceiptBtn3ActionPerformed
+        this.transList = (ArrayList<Transaction>) transController.getThisWeekTransactions();
+        jTable1.setModel(getModel());
+    }//GEN-LAST:event_viewWeekTransactionBtnActionPerformed
 
-    private void printReceiptBtn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printReceiptBtn4ActionPerformed
+    private void viewTodayTransactionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewTodayTransactionBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_printReceiptBtn4ActionPerformed
+        this.transList = (ArrayList<Transaction>) transController.getTodayTransactions();
+        jTable1.setModel(getModel());
+    }//GEN-LAST:event_viewTodayTransactionBtnActionPerformed
+
+    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchFieldActionPerformed
+
+    private void showAllTransactionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAllTransactionBtnActionPerformed
+        // TODO add your handling code here:
+        this.transList = (ArrayList<Transaction>) transController.getAllTransactions();
+        jTable1.setModel(getModel());
+    }//GEN-LAST:event_showAllTransactionBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -356,6 +371,7 @@ public class Transactions extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -363,10 +379,53 @@ public class Transactions extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JButton printReceiptBtn1;
-    private javax.swing.JButton printReceiptBtn2;
-    private javax.swing.JButton printReceiptBtn3;
-    private javax.swing.JButton printReceiptBtn4;
+    private javax.swing.JButton printTransaction;
     private javax.swing.JTextField searchField;
+    private javax.swing.JButton showAllTransactionBtn;
+    private javax.swing.JButton viewMonthTransactionBtn;
+    private javax.swing.JButton viewTodayTransactionBtn;
+    private javax.swing.JButton viewWeekTransactionBtn;
     // End of variables declaration//GEN-END:variables
+
+    private AbstractTableModel getModel() {
+        AbstractTableModel atm = new AbstractTableModel(){
+            @Override
+            public int getRowCount() {
+                return transList.size();
+            }
+
+            @Override
+            public int getColumnCount() {
+                return 4;
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+               
+               Transaction transInstance = transList.get(rowIndex);
+                switch(columnIndex){
+                    case 0:
+                        return transInstance.getId();
+                    case 1:
+                        UserController userController  = new UserController();
+                        return userController.getUser(transInstance.getUser_id()).getFullName();
+                    case 2:
+                        return transInstance.getTotal_price();
+                    case 3:
+                        return new Date(transInstance.getTimestamp());
+                    
+                }
+                
+                return null;
+            }
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return true;
+            }
+            
+        };
+        
+        return atm;
+    }
 }

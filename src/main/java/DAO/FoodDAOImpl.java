@@ -222,7 +222,7 @@ public class FoodDAOImpl implements FoodDAO {
             preparedStmt.setInt(1, transaction.getUser_id());
             preparedStmt.setDouble(2, transaction.getTotal_price());
             preparedStmt.setString(4, transaction.getStatus());
-            preparedStmt.setString(5, transaction.getTimestamp());
+            preparedStmt.setLong(5, transaction.getTimestamp());
 
 
             preparedStmt.execute();
@@ -252,7 +252,7 @@ public class FoodDAOImpl implements FoodDAO {
                 transaction.setId(resultSet.getInt("id"));
                 transaction.setUser_id(resultSet.getInt("user_id"));
                 transaction.setTotal_price(resultSet.getDouble("total_price"));
-                transaction.setTimestamp(resultSet.getString("timestamp"));
+                transaction.setTimestamp(resultSet.getLong("timestamp"));
                 transaction.setStatus(resultSet.getString("status"));
                
                 Translist.add(transaction);

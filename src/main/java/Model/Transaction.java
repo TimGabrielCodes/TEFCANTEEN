@@ -12,13 +12,13 @@ public class Transaction {
     private int user_id;
     private Double total_price;
     private String status = "Paid";
-    private String timestamp;
+    private Long timestamp;
     
     public Transaction(){
         
     }
 
-    public Transaction(int id, int user_id, Double total_price, String timestamp) {
+    public Transaction(int id, int user_id, Double total_price, Long timestamp) {
         this.id = id;
         this.user_id = user_id;
         this.total_price = total_price;
@@ -58,14 +58,13 @@ public class Transaction {
         this.status = status;
     }
 
-    public String getTimestamp() {
+    public Long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
     }
-    
     
     @Override
     public String toString() {

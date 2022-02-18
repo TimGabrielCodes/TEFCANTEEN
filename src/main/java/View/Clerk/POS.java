@@ -297,24 +297,14 @@ public class POS extends javax.swing.JFrame {
             trans.setUser_id(LoggedInUserHandler.getLoggedInUserId());
             trans.setTotal_price(cart.getTotalPrice());
             //Used default status set in model
-            trans.setTimestamp(new Date().toString());
+            trans.setTimestamp(new Date().getTime());
             
             transController.saveTransaction(trans);
                 
             System.out.println("Saved " + trans.toString());
 
-//            PrinterService printerService = new PrinterService();
-//            
-//            //Show list of printers in console
-//            System.out.println(printerService.getPrinters());
-//
-//            //print some stuff. Change the printer name to your thermal printer name.
-//            printerService.printString("VeedaR7", cart.printCart());
-//
-//            // cut that paper!
-//            byte[] cutP = new byte[] { 0x1d, 'V', 1 };
-//
-//            printerService.printBytes("VeedaR7", cutP);
+            //CALL printer
+            PrinterService.doPrint(cart.printCart());
         }
     }//GEN-LAST:event_printReceiptBtnActionPerformed
 

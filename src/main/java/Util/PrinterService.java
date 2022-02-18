@@ -26,7 +26,23 @@ import javax.print.attribute.PrintRequestAttributeSet;
  * @author TEF - SPA
  */
 public class PrinterService implements Printable{
-public List<String> getPrinters(){
+    
+    public static void doPrint(String printedText){
+        PrinterService printerService = new PrinterService();
+            
+            //Show list of printers in console
+            System.out.println(printerService.getPrinters());
+
+            //print some stuff. Change the printer name to your thermal printer name.
+            printerService.printString("VeedaR7", printedText);
+
+            // cut that paper!
+            byte[] cutP = new byte[] { 0x1d, 'V', 1 };
+
+            printerService.printBytes("VeedaR7", cutP);
+    }
+    
+    public List<String> getPrinters(){
 
         DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
         PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
